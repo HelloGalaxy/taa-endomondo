@@ -4,6 +4,7 @@
 	<groupId>fr.istic.m2</groupId>
 	<artifactId>taa_endomondo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+		<packaging>war</packaging>
 	
 	<properties>
 		<jersey-version>1.8</jersey-version>
