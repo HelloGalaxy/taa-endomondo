@@ -7,7 +7,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import model.User;
+import model.database.User;
+
+
 
 @Path("/user")
 public class UserManager {
@@ -24,19 +26,6 @@ public class UserManager {
 		return "<html> " + "<title>" + "Bonjour premier  test qvec jersy "
 				+ "</title>" + "<body><h1>" + "Hello Jersey" + "</body></h1>"
 				+ "</html> ";
-	}
-
-	@Path("/allusers")
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Collection<User> getAllUser() {
-
-		List<User> users = new LinkedList<User>();
-		User user = new User();
-		user.setNickname("TTTTT");
-		users.add(user);
-
-		return users;
 	}
 
 }

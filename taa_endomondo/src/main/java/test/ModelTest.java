@@ -7,8 +7,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import model.Sex;
-import model.User;
+import model.database.Sex;
+import model.database.User;
+
+
 
 public class ModelTest {
 
@@ -35,7 +37,7 @@ public class ModelTest {
 			//1: create  a first user ...
 			
 			
-			User us1 = new model.User(); 
+			User us1 = new model.database.User(); 
 			us1.setEmail("us1@yahoo.fr");em.persist(us1);
 			Date joind = new Date();joind.setDate(9/7/2010);
 			Date birth = new Date();birth.setDate(9/7/1985);
@@ -48,7 +50,7 @@ public class ModelTest {
 			
 			//create a second user 
 			
-			User us2 = new model.User(); 
+			User us2 = new model.database.User(); 
 			us2.setEmail("us2@gmail.fr");em.persist(us2);
 			Date joind2 = new Date();joind.setDate(9/7/2011);
 			Date birth2 = new Date();birth.setDate(9/7/1984);
