@@ -1,5 +1,5 @@
 package model.database;
 
-public enum TypeSport {
+public enum SportType {
 	Running, Riding, Cycling, Tenis, Swimming, Hiking, Football
 }

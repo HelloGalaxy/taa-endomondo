@@ -20,7 +20,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String email; // the email for identifying a user
+	private String email;
 	private String firstname;
 	private String lastname;
 	private String nickname;
@@ -35,7 +35,9 @@ public class User {
 	@Temporal(TemporalType.DATE)
 	private Date joindate;
 	@OneToMany
-	Collection<User> friends;
+	private Collection<User> friends;
+	@OneToMany
+	private Collection<Plan> plans;
 
 	public int getId() {
 		return id;
@@ -144,5 +146,15 @@ public class User {
 	public void setFriends(Collection<User> friends) {
 		this.friends = friends;
 	}
+
+	public Collection<Plan> getPlans() {
+		return plans;
+	}
+
+	public void setPlans(Collection<Plan> plans) {
+		this.plans = plans;
+	}
+	
+	
 
 }

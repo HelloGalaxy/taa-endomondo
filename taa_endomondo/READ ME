@@ -1,0 +1,4 @@
+https://github.com/HelloGalaxy/taa-endomondo.git
+
+configur the env
+SET PATH=%PATH%;H:\TPMGL\TAA\NODE\node_modules\npm

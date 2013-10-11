@@ -1,10 +1,16 @@
 package model.database;
 
+import java.util.Collection;
 import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,6 +32,10 @@ public class Plan {
 	private Route route;
 	@OneToOne
 	private Weather weather;
+	@Enumerated(EnumType.STRING)
+	private SportType sportType;
+	@OneToMany
+	private Collection<User> users;
 
 	private float avgHeartRate;
 
@@ -83,6 +93,22 @@ public class Plan {
 
 	public void setWeather(Weather weather) {
 		this.weather = weather;
+	}
+
+	public Route getRoute() {
+		return route;
+	}
+
+	public void setRoute(Route route) {
+		this.route = route;
+	}
+
+	public SportType getSportType() {
+		return sportType;
+	}
+
+	public void setSportType(SportType sportType) {
+		this.sportType = sportType;
 	}
 
 	public float getAvgHeartRate() {
