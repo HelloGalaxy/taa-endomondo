@@ -14,22 +14,23 @@ import javax.ws.rs.core.MediaType;
 import model.database.User;
 
 /**
- * Rest request linstener  .... 
+ * Rest request linstener ....
+ * 
  * @author Boussad
  * 
  * */
 
 @Path("/user")
 public class UserManager {
- 
+
 	EntityManagerFactory emf;
-	EntityManager em ;
-	
+	EntityManager em;
+
 	private void init() {
-		 //Use The persistence.xml  configuration 
-		 emf = Persistence.createEntityManagerFactory("endomondo");
+		// Use The persistence.xml configuration
+		emf = Persistence.createEntityManagerFactory("endomondo");
 		// Retrieve an entity manager
-		 em = emf.createEntityManager();
+		em = emf.createEntityManager();
 		// work with entity manager
 
 	}
@@ -42,37 +43,40 @@ public class UserManager {
 				+ "</title>" + "<body><h1>" + "Hello Jersey" + "</body></h1>"
 				+ "</html> ";
 	}
-   
-	@GET  @Path("/allFirstNames")
-	 @Produces({ MediaType.APPLICATION_JSON })
-	    public Collection<String> listUsers() {
+
+	@GET
+	@Path("/allFirstNames")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Collection<String> listUsers() {
 		init();
 		UserDao dao = new UserDao(em);
-		 Collection<String>   s =dao.getAllUsers();
-		 closeresources();
-		  return s;
-    }
-	
-	 @GET @Path("searchById/{id}")
-	    @Produces({ MediaType.APPLICATION_JSON })
-	    public String findById(@PathParam("id") int arg0) {
-		    init();
-	        String res=new UserDao(em).userById(arg0);
-	        closeresources();   
-	        return res;
-	 }
-	
-	 @GET  @Path("/search")
-	 @Produces({ MediaType.APPLICATION_JSON })
-	    public Collection<String> list() {
-	     Collection<String>   s  = new ArrayList<String>();   
-		  s.add("Jhone smith ");
-		  s.add("Alan bistole");
-		  return s;
-     }
-	
-	 public void closeresources(){
-		 em.close();
-		 emf.close();
-	 }
+		Collection<String> s = dao.getAllUsers();
+		closeresources();
+		return s;
+	}
+
+	@GET
+	@Path("searchById/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public String findById(@PathParam("id") int arg0) {
+		init();
+		String res = new UserDao(em).userById(arg0);
+		closeresources();
+		return res;
+	}
+
+	@GET
+	@Path("/search")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Collection<String> list() {
+		Collection<String> s = new ArrayList<String>();
+		s.add("Jhone smith ");
+		s.add("Alan bistole");
+		return s;
+	}
+
+	public void closeresources() {
+		em.close();
+		emf.close();
+	}
 }

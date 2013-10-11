@@ -10,7 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Bout {
+public class Plan {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
