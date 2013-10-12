@@ -47,9 +47,6 @@ public class UserManager {
 	}
 
 	
-	
-	
-	
 	// This method is called if HTML is request
 	@GET
 	@Produces(MediaType.TEXT_HTML)
