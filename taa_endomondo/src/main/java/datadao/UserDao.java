@@ -1,4 +1,4 @@
-package service;
+package datadao;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +11,7 @@ public class UserDao {
 
 	EntityManager _em;
 
-	UserDao(EntityManager entman) {
+	public UserDao(EntityManager entman) {
 		_em = entman;
 	}
 
@@ -45,7 +45,7 @@ public class UserDao {
 	 * 
 	 * @author : boussad
 	 * */
-	public String userById(int iduser) {
+	public String getUserById(int iduser) {
 
 		String queryString1 = "SELECT  usr  FROM  User AS usr where usr.id=:idf  ";
 

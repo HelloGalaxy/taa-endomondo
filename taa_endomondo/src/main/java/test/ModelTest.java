@@ -71,9 +71,9 @@ public class ModelTest {
 			em.persist(plan1);
 			
 			plan1.setAvgHeartRate(0);
-			plan1.setEndTime(new Date(2013, 10, 20, 15, 0));
+			plan1.setEndDate(new Date(2013, 10, 20, 15, 0));
 			plan1.setNote("Running in the centre place");
-			plan1.setStartTime(new Date(2013, 10, 20, 10, 40));
+			plan1.setStartDate(new Date(2013, 10, 20, 10, 40));
 			plan1.setTitle("Ah...");
 			plan1.setSportType(SportType.Running);
 			

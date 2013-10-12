@@ -1,6 +1,7 @@
 package service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,7 +12,17 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import model.database.User;
+import datadao.UserDao;
+
+/*
+ * getUserById
+ * getUserByEmail
+ * getUserByName -> we need search by last/first Name
+ * getAllUsers
+ * getAllPlans
+ * getFriends
+ * 
+ */
 
 /**
  * Rest request linstener ....
@@ -35,6 +46,10 @@ public class UserManager {
 
 	}
 
+	
+	
+	
+	
 	// This method is called if HTML is request
 	@GET
 	@Produces(MediaType.TEXT_HTML)
@@ -54,13 +69,17 @@ public class UserManager {
 		closeresources();
 		return s;
 	}
-
-	@GET
+   
+	
+	/**
+	 *   Search a  
+	 */
+  	@GET
 	@Path("searchById/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public String findById(@PathParam("id") int arg0) {
 		init();
-		String res = new UserDao(em).userById(arg0);
+		String res = new UserDao(em).getUserById(arg0);
 		closeresources();
 		return res;
 	}
