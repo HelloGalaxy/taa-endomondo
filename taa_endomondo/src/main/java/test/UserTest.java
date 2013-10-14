@@ -9,7 +9,7 @@ import javax.persistence.Persistence;
 
 import model.database.*;
 
-public class ModelTest {
+public class UserTest {
 
 	/**
 	 * @param args
