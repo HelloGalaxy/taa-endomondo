@@ -2,7 +2,9 @@ package service;
 
 import java.util.Collection;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -24,7 +26,7 @@ import datadao.CoordGpsDao;
 public class CoordGpsManager extends BasicManager {
 
 	@GET
-	@Path("/getCoordById/{id}")
+	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public CoordGPS getCoordById(@PathParam("id") int id) {
 
@@ -50,28 +52,41 @@ public class CoordGpsManager extends BasicManager {
 	}
 
 	@POST
-	@Path("/createCoord")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void createCoord(CoordGPS gps) {
+	@Produces({ MediaType.APPLICATION_JSON })
+	public boolean createCoord(CoordGPS gps) {
 
-		System.err.println(gps);
 		beginPersitence();
 		CoordGpsDao dataManager = new CoordGpsDao(em);
 		gps.setId(0);
-		dataManager.createCoordGPS(gps);
+		boolean result = dataManager.createCoordGPS(gps);
 		endPersitence();
+		return result;
 	}
 
 	@PUT
-	@Path("/updateCoord")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateCoord(CoordGPS gps) {
+	@Produces({ MediaType.APPLICATION_JSON })
+	public boolean updateCoord(CoordGPS gps) {
 
-		System.err.println(gps);
 		beginPersitence();
 		CoordGpsDao dataManager = new CoordGpsDao(em);
-		dataManager.updateCoordGPS(gps);
+		boolean result = dataManager.updateCoordGPS(gps);
 		endPersitence();
+		return result;
+	}
+
+	@DELETE
+	@Path("{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public boolean deleteCoord(@PathParam("id") int id) {
+
+		beginPersitence();
+		CoordGpsDao dataManager = new CoordGpsDao(em);
+		boolean result = dataManager.deleteCoordGPS(id);
+		endPersitence();
+
+		return result;
 	}
 
 }

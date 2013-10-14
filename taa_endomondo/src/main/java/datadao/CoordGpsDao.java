@@ -16,10 +16,11 @@ public class CoordGpsDao extends DataDao {
 
 	public CoordGPS getCoordGPSById(int id) {
 
-		String queryString = "select gps from CoordGPS as gps where gps.id=:itsID";
-		Query query = em.createQuery(queryString).setParameter("itsID", id);
-		CoordGPS coord = (CoordGPS) query.getSingleResult();
-
+		// String queryString =
+		// "select gps from CoordGPS as gps where gps.id=:itsID";
+		// Query query = em.createQuery(queryString).setParameter("itsID", id);
+		CoordGPS coord = em.find(CoordGPS.class, id); // (CoordGPS)
+														// query.getSingleResult();
 		return coord;
 	}
 
@@ -62,10 +63,34 @@ public class CoordGpsDao extends DataDao {
 
 		tx = null;
 		try {
-		
+
 			tx = em.getTransaction();
 			tx.begin();
 			em.merge(gps);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean deleteCoordGPS(int id) {
+
+		tx = null;
+		try {
+
+			tx = em.getTransaction();
+			tx.begin();
+			CoordGPS gps = getCoordGPSById(id);
+
+			if (gps == null)
+				return false;
+
+			em.remove(gps);
 			tx.commit();
 			tx = null;
 
