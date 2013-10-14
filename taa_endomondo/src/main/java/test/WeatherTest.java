@@ -7,10 +7,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import model.database.CoordGPS;
+import model.database.Weather;
 
-public class CoordGpsTest {
-	
+public class WeatherTest {
 	public static void main(String[] args) {
 
 		EntityManagerFactory emf = Persistence
@@ -24,17 +23,38 @@ public class CoordGpsTest {
 			tx = em.getTransaction();
 			tx.begin();
 
-			int count = 100;
+			int count = 10;
 
 			Random random = new Random();
 
 			for (int i = 0; i < count; i++) {
-				CoordGPS coord = new CoordGPS();
-				em.persist(coord);
+				Weather model = new Weather();
+				em.persist(model);
+				model.setCity("FF " + i + " city");
 
-				coord.setAttitude(random.nextInt(8848));
-				coord.setLatitude(random.nextInt(180) - 90);
-				coord.setLongitude(random.nextInt(360) - 180);
+				model.setDirectionOfWind("East");
+				model.setHumidity(random.nextInt(50));
+				model.setPressure(random.nextInt(50) + 400);
+				model.setSpeedOfWind(random.nextInt(100));
+
+				String state = "";
+
+				int index = random.nextInt(3);
+
+				switch (index) {
+				case 0:
+					state = "Sunny";
+					break;
+				case 1:
+					state = "Cloudy";
+					break;
+				case 2:
+					state = "Rainy";
+					break;
+				}
+
+				model.setStateOfWtr(state);
+				model.setTemperature(random.nextInt(40));
 			}
 
 			tx.commit();

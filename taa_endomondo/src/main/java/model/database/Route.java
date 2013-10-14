@@ -4,10 +4,13 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 @Entity
 public class Route {
@@ -15,11 +18,12 @@ public class Route {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@OneToMany
-	private Collection<CoordGPS> coordListGps;
+	@OneToMany(fetch=FetchType.EAGER)
+	@JsonManagedReference
+	private Collection<CoordGPS> coordGpsList;
 
 	public Route() {
-		coordListGps = new LinkedList<CoordGPS>();
+		coordGpsList = new LinkedList<CoordGPS>();
 	}
 
 	public int getId() {
@@ -30,12 +34,12 @@ public class Route {
 		this.id = id;
 	}
 
-	public Collection<CoordGPS> getCoordListGps() {
-		return coordListGps;
+	public Collection<CoordGPS> getCoordGpsList() {
+		return coordGpsList;
 	}
 
-	public void setCoordListGps(Collection<CoordGPS> coordListGps) {
-		this.coordListGps = coordListGps;
+	public void setCoordListGps(Collection<CoordGPS> coordGpsList) {
+		this.coordGpsList = coordGpsList;
 	}
 
 }

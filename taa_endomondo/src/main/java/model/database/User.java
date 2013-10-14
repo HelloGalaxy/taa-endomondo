@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 public class User {
 
@@ -35,9 +37,12 @@ public class User {
 	@Temporal(TemporalType.DATE)
 	private Date joindate;
 	@OneToMany
+	@JsonIgnore
 	private Collection<User> friends;
 	@OneToMany
+	@JsonIgnore
 	private Collection<Plan> plans;
+	
 
 	public int getId() {
 		return id;

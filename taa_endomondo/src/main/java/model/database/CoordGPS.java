@@ -4,6 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
 
 @Entity
 public class CoordGPS {
@@ -14,6 +19,10 @@ public class CoordGPS {
 	private double longitude;
 	private double latitude;
 	private double attitude;
+	
+	@OneToOne
+	@JsonBackReference
+	private CoordGPS coordGPS;
 
 	public int getId() {
 		return id;
@@ -46,5 +55,15 @@ public class CoordGPS {
 	public void setAttitude(double attitude) {
 		this.attitude = attitude;
 	}
+
+	public CoordGPS getCoordGPS() {
+		return coordGPS;
+	}
+
+	public void setCoordGPS(CoordGPS coordGPS) {
+		this.coordGPS = coordGPS;
+	}
+	
+	
 
 }

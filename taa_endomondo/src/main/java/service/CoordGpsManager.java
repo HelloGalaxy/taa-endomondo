@@ -22,20 +22,8 @@ import datadao.UserDao;
  */
 
 @Path("/gps")
-public class CoordGpsManager {
-	EntityManagerFactory emf;
-	EntityManager em;
-
-	private void beginPersitence() {
-		emf = Persistence.createEntityManagerFactory("endomondo");
-		em = emf.createEntityManager();
-	}
-
-	private void endPersitence() {
-		em.close();
-		emf.close();
-	}
-
+public class CoordGpsManager extends BasicService {
+	
 	@GET
 	@Path("/getCoordById/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })

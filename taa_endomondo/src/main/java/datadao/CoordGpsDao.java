@@ -19,9 +19,7 @@ public class CoordGpsDao {
 	public CoordGPS getCoordGPSById(int id) {
 
 		String queryString = "select gps from CoordGPS as gps where gps.id=:itsID";
-
 		Query query = em.createQuery(queryString).setParameter("itsID", id);
-
 		CoordGPS coord = (CoordGPS) query.getSingleResult();
 
 		return coord;

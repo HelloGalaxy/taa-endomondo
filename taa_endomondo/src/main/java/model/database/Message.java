@@ -1,19 +1,22 @@
 package model.database;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 @Entity
 public class Message {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@OneToOne
+	@OneToOne(fetch=FetchType.EAGER)
 	private User from;
-	@OneToOne
+	@OneToOne(fetch=FetchType.EAGER)
 	private User to;
 	private String content;
 
