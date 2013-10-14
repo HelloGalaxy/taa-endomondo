@@ -19,7 +19,7 @@ import datadao.WeatherDao;
  */
 
 @Path("/weather")
-public class WeatherManager extends BasicService {
+public class WeatherManager extends BasicManager {
 
 	@GET
 	@Path("/getWeatherById/{id}")

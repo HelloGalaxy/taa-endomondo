@@ -18,7 +18,7 @@ import datadao.RouteDao;
  * 
  */
 @Path("/route")
-public class RouteManager extends BasicService {
+public class RouteManager extends BasicManager {
 	@GET
 	@Path("/getRouteById/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })

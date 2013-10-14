@@ -20,9 +20,9 @@ public class CoordGPS {
 	private double latitude;
 	private double attitude;
 	
-	@OneToOne
-	@JsonBackReference
-	private CoordGPS coordGPS;
+//	@OneToOne
+//	@JsonBackReference
+//	private CoordGPS coordGPS;
 
 	public int getId() {
 		return id;
@@ -56,13 +56,13 @@ public class CoordGPS {
 		this.attitude = attitude;
 	}
 
-	public CoordGPS getCoordGPS() {
-		return coordGPS;
-	}
-
-	public void setCoordGPS(CoordGPS coordGPS) {
-		this.coordGPS = coordGPS;
-	}
+	// public CoordGPS getCoordGPS() {
+	// return coordGPS;
+	// }
+	//
+	// public void setCoordGPS(CoordGPS coordGPS) {
+	// this.coordGPS = coordGPS;
+	// }
 	
 	
 

@@ -22,7 +22,7 @@ import datadao.UserDao;
  */
 
 @Path("/gps")
-public class CoordGpsManager extends BasicService {
+public class CoordGpsManager extends BasicManager {
 	
 	@GET
 	@Path("/getCoordById/{id}")

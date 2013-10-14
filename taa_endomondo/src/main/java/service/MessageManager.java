@@ -19,7 +19,7 @@ import datadao.MessageDao;
  * 
  */
 @Path("/message")
-public class MessageManager extends BasicService {
+public class MessageManager extends BasicManager {
 
 	@GET
 	@Path("/getMessageById/{id}")

@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.codehaus.jackson.annotate.JsonManagedReference;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 @Entity
 public class Route {
@@ -19,7 +19,7 @@ public class Route {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@OneToMany(fetch=FetchType.EAGER)
-	@JsonManagedReference
+	// @JsonManagedReference
 	private Collection<CoordGPS> coordGpsList;
 
 	public Route() {
