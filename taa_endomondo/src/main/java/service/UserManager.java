@@ -32,67 +32,55 @@ import datadao.UserDao;
  * */
 
 @Path("/user")
-public class UserManager {
+public class UserManager extends BasicManager {
 
-	EntityManagerFactory emf;
-	EntityManager em;
-
-	private void init() {
-		// Use The persistence.xml configuration
-		emf = Persistence.createEntityManagerFactory("endomondo");
-		// Retrieve an entity manager
-		em = emf.createEntityManager();
-		// work with entity manager
-
-	}
-
-	
 	// This method is called if HTML is request
-	@GET
-	@Produces(MediaType.TEXT_HTML)
-	public String sayHtmlHello() {
-		return "<html> " + "<title>" + "Bonjour premier  test qvec jersy "
-				+ "</title>" + "<body><h1>" + "Hello Jersey" + "</body></h1>"
-				+ "</html> ";
-	}
+		@GET
+		@Produces(MediaType.TEXT_HTML)
+		public String sayHtmlHello() {
+			return "<html> " + "<title>" + "Bonjour premier  test qvec jersy "
+					+ "</title>" + "<body><h1>" + "Hello Jersey" + "</body></h1>"
+					+ "</html> ";
+		}
 
-	@GET
-	@Path("/allFirstNames")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Collection<String> listUsers() {
-		init();
-		UserDao dao = new UserDao(em);
-		Collection<String> s = dao.getAllUsers();
-		closeresources();
-		return s;
-	}
-   
-	
-	/**
-	 *   Search a  
-	 */
-  	@GET
-	@Path("searchById/{id}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public String findById(@PathParam("id") int arg0) {
-		init();
-		String res = new UserDao(em).getUserById(arg0);
-		closeresources();
-		return res;
-	}
+		@GET
+		@Path("/allusers")
+		@Produces({ MediaType.APPLICATION_JSON })
+		public Collection<String> listUsers() {
+			beginPersitence();
+			UserDao dao = new UserDao(em);
+			Collection<String> s = dao.getAllUsers();
+			endPersitence();
+			return s;
+		}
 
-	@GET
-	@Path("/search")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Collection<String> list() {
-		Collection<String> s = new ArrayList<String>();
-		s.add("Jhone smith ");
-		s.add("Alan bistole");
-		return s;
-	}
+		@GET
+		@Path("getUserById/{id}")
+		@Produces({ MediaType.APPLICATION_JSON })
+		public String findUserWithId(@PathParam("id") int arg0) {
+			beginPersitence();
+			String res = new UserDao(em).userById(arg0);
+			endPersitence();
+			return res;
+		}
 
-	public void closeresources() {
-		em.close();
-		emf.close();
-	}
+		@GET
+		@Path("getUserByEmail/{mail}")
+		@Produces({ MediaType.APPLICATION_JSON })
+		public String findUserWithMail(@PathParam("mail") String arg0) {
+			beginPersitence();
+			String res = new UserDao(em).userByEmail(arg0);
+			endPersitence();
+			return res;
+		}
+		
+		@GET
+		@Path("/search")
+		@Produces({ MediaType.APPLICATION_JSON })
+		public Collection<String> list() {
+			Collection<String> s = new ArrayList<String>();
+			s.add("Jhone smith ");
+			s.add("Alan bistole");
+			return s;
+		}
 }

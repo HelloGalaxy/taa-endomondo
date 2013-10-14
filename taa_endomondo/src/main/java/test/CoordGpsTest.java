@@ -24,7 +24,7 @@ public class CoordGpsTest {
 			tx = em.getTransaction();
 			tx.begin();
 
-			int count = 100;
+			int count = 10;
 
 			Random random = new Random();
 

@@ -24,14 +24,19 @@ public class UserDao {
 
 		try {
 
-			String queryString = "SELECT firstname  FROM  User ";
+			String queryString = "SELECT us FROM User  as  us ";
 			Query query = _em.createQuery(queryString);
 			// get the list of all the users
-			ArrayList<String> li = (ArrayList<String>) query.getResultList();
-			for (int i = 0; i < li.size(); i++) {
-				System.out.println(li.get(i));
+			ArrayList<User> liusr = (ArrayList<User>) query.getResultList();
+			ArrayList<String>  liusrStr= new ArrayList();
+			for (int i = 0; i < liusr.size(); i++) {
+				User user =  liusr.get(i);
+				String onusr = String.valueOf(i)+" : "+user.getFirstname()+" : "+user.getLastname()+" : "+user.getEmail()+" : "+user.getFacebook()+"\n";
+			    liusrStr.add(onusr); 	
 			}
-			return li;
+			
+			return liusrStr;
+	
 		} catch (RuntimeException e) {
 			System.out.println("Exception caught while trying to in USERDao");
 		}
@@ -45,7 +50,7 @@ public class UserDao {
 	 * 
 	 * @author : boussad
 	 * */
-	public String getUserById(int iduser) {
+	public String userById(int iduser) {
 
 		String queryString1 = "SELECT  usr  FROM  User AS usr where usr.id=:idf  ";
 
@@ -60,4 +65,27 @@ public class UserDao {
 			return "";
 		}
 	}
+	
+	/**
+	 * @B
+	 *   Search   first name and the last name of the user give the email of the user 
+	 * */
+	
+	public String userByEmail(String _mail) {
+
+		String queryString1 = "SELECT  usr  FROM  User AS usr where usr.email=:mail  ";
+
+		try {
+			Query query1 = _em.createQuery(queryString1).setParameter("mail",
+			 		_mail);
+			User usr = (User) query1.getSingleResult();
+		   	return (usr.getLastname() + " " + usr.getFirstname());
+
+	    	} catch (NoResultException notfound) {
+	 		System.out.println("User returened when fatching by mail is null  .... ");
+			return "";
+		}
+		
+	}
+	
 }
