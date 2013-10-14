@@ -8,12 +8,10 @@ import javax.persistence.Query;
 
 import model.database.CoordGPS;
 
-public class CoordGpsDao {
-
-	EntityManager em;
+public class CoordGpsDao extends DataDao {
 
 	public CoordGpsDao(EntityManager em) {
-		this.em = em;
+		super(em);
 	}
 
 	public CoordGPS getCoordGPSById(int id) {
@@ -40,5 +38,42 @@ public class CoordGpsDao {
 		}
 
 		return null;
+	}
+
+	public boolean createCoordGPS(CoordGPS gps) {
+
+		tx = null;
+		try {
+			tx = em.getTransaction();
+			tx.begin();
+			em.persist(gps);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean updateCoordGPS(CoordGPS gps) {
+
+		tx = null;
+		try {
+		
+			tx = em.getTransaction();
+			tx.begin();
+			em.merge(gps);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
 	}
 }
