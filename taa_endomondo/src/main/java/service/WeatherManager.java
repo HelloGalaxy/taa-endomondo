@@ -2,6 +2,9 @@ package service;
 
 import java.util.Collection;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -19,17 +22,23 @@ import datadao.WeatherDao;
  */
 
 @Path("/weather")
-public class WeatherManager extends BasicManager {
+public class WeatherManager {
+
+	protected EntityManagerFactory emf;
+	protected EntityManager em;
+
+	public WeatherManager() {
+		emf = Persistence.createEntityManagerFactory("endomondo");
+		em = emf.createEntityManager();
+	}
 
 	@GET
 	@Path("/getWeatherById/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Weather getWeatherById(@PathParam("id") int id) {
 
-
 		WeatherDao dataManager = new WeatherDao(em);
 		Weather model = dataManager.getWeatherById(id);
-
 
 		return model;
 
@@ -40,10 +49,8 @@ public class WeatherManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Collection<Weather> getWeathers(@PathParam("id") int id) {
 
-	
 		WeatherDao dataManager = new WeatherDao(em);
 		Collection<Weather> models = dataManager.getAllWeathers();
-
 
 		return models;
 
@@ -54,10 +61,8 @@ public class WeatherManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Collection<Weather> getWheathersByCity(@PathParam("city") String city) {
 
-
 		WeatherDao dataManager = new WeatherDao(em);
 		Collection<Weather> models = dataManager.getWheathersByCity(city);
-
 
 		return models;
 

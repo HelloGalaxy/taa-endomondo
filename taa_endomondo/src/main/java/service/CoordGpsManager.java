@@ -2,6 +2,9 @@ package service;
 
 import java.util.Collection;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -25,13 +28,22 @@ import datadao.CoordGpsDao;
 @Path("/gps")
 public class CoordGpsManager  {
 
+	protected EntityManagerFactory emf;
+	protected EntityManager em;
+	
+	
+	public CoordGpsManager() {
+		emf = Persistence.createEntityManagerFactory("endomondo");
+		em = emf.createEntityManager();
+	}
+	
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public CoordGPS getCoordById(@PathParam("id") int id) {
 
 
-		CoordGpsDao dataManager = new CoordGpsDao(BasicManager.em);
+		CoordGpsDao dataManager = new CoordGpsDao(em);
 		CoordGPS coord = dataManager.getCoordGPSById(id);
 
 		return coord;
@@ -44,7 +56,7 @@ public class CoordGpsManager  {
 	public Collection<CoordGPS> getAllCoords() {
 
 
-		CoordGpsDao dataManager = new CoordGpsDao(BasicManager.em);
+		CoordGpsDao dataManager = new CoordGpsDao(em);
 		Collection<CoordGPS> coords = dataManager.getAllCoordGPSs();
 
 		return coords;
@@ -56,7 +68,7 @@ public class CoordGpsManager  {
 	public boolean createCoord(CoordGPS gps) {
 
 	
-		CoordGpsDao dataManager = new CoordGpsDao(BasicManager.em);
+		CoordGpsDao dataManager = new CoordGpsDao(em);
 		gps.setId(0);
 		boolean result = dataManager.createCoordGPS(gps);
 
@@ -69,7 +81,7 @@ public class CoordGpsManager  {
 	public boolean updateCoord(CoordGPS gps) {
 
 
-		CoordGpsDao dataManager = new CoordGpsDao(BasicManager.em);
+		CoordGpsDao dataManager = new CoordGpsDao(em);
 		boolean result = dataManager.updateCoordGPS(gps);
 
 		return result;
@@ -81,7 +93,7 @@ public class CoordGpsManager  {
 	public boolean deleteCoord(@PathParam("id") int id) {
 
 
-		CoordGpsDao dataManager = new CoordGpsDao(BasicManager.em);
+		CoordGpsDao dataManager = new CoordGpsDao(em);
 		boolean result = dataManager.deleteCoordGPS(id);
 
 

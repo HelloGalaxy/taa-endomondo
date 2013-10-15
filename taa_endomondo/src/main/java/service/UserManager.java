@@ -3,6 +3,9 @@ package service;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -34,7 +37,14 @@ import datadao.UserDao;
  * */
 
 @Path("/user")
-public class UserManager extends BasicManager {
+public class UserManager {
+	protected EntityManagerFactory emf;
+	protected EntityManager em;
+
+	public UserManager() {
+		emf = Persistence.createEntityManagerFactory("endomondo");
+		em = emf.createEntityManager();
+	}
 
 	// This method is called if HTML is request
 	@GET
@@ -91,11 +101,10 @@ public class UserManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public boolean createCoord(User obj) {
 
-
 		UserDao dataManager = new UserDao(em);
 		obj.setId(0);
 		boolean result = dataManager.create(obj);
-	
+
 		return result;
 	}
 
@@ -103,7 +112,6 @@ public class UserManager extends BasicManager {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public boolean updateCoord(User obj) {
-
 
 		UserDao dataManager = new UserDao(em);
 		boolean result = dataManager.update(obj);
@@ -116,10 +124,8 @@ public class UserManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public boolean deleteCoord(@PathParam("id") int id) {
 
-
 		UserDao dataManager = new UserDao(em);
 		boolean result = dataManager.delete(id);
-
 
 		return result;
 	}

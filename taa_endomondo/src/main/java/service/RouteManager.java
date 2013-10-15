@@ -2,6 +2,9 @@ package service;
 
 import java.util.Collection;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,7 +25,14 @@ import datadao.RouteDao;
  * 
  */
 @Path("/route")
-public class RouteManager extends BasicManager {
+public class RouteManager {
+	protected EntityManagerFactory emf;
+	protected EntityManager em;
+
+	public RouteManager() {
+		emf = Persistence.createEntityManagerFactory("endomondo");
+		em = emf.createEntityManager();
+	}
 
 	@GET
 	@Path("{id}")
@@ -32,7 +42,6 @@ public class RouteManager extends BasicManager {
 		RouteDao dataManager = new RouteDao(em);
 		Route model = dataManager.getRouteById(id);
 
-
 		return model;
 	}
 
@@ -41,10 +50,8 @@ public class RouteManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Collection<Route> getRoutes(@PathParam("id") int id) {
 
-
 		RouteDao dataManager = new RouteDao(em);
 		Collection<Route> model = dataManager.getAllRoutes();
-
 
 		return model;
 
@@ -55,7 +62,6 @@ public class RouteManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public boolean createCoord(Route obj) {
 
-		
 		RouteDao dataManager = new RouteDao(em);
 		obj.setId(0);
 		boolean result = dataManager.create(obj);
@@ -68,10 +74,9 @@ public class RouteManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public boolean updateCoord(Route obj) {
 
-		
 		RouteDao dataManager = new RouteDao(em);
 		boolean result = dataManager.update(obj);
-	
+
 		return result;
 	}
 
@@ -80,7 +85,6 @@ public class RouteManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public boolean deleteCoord(@PathParam("id") int id) {
 
-		
 		RouteDao dataManager = new RouteDao(em);
 		boolean result = dataManager.delete(id);
 
