@@ -42,8 +42,8 @@ public class MessageTest {
 				Query query = em.createQuery(queryString);
 				List<User> us = query.getResultList();
 
-				model.setFrom(us.get(random.nextInt(us.size())));
-				model.setTo(us.get(random.nextInt(us.size())));
+				model.setFromWho(us.get(random.nextInt(us.size())));
+				model.setToWho(us.get(random.nextInt(us.size())));
 			}
 
 			tx.commit();

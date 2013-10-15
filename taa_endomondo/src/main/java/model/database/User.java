@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -38,13 +38,14 @@ public class User {
 	private String facebook;
 	@Temporal(TemporalType.DATE)
 	private Date joindate;
-	@OneToMany//(fetch=FetchType.EAGER)
-	//@JsonIgnore
+	@ManyToMany(fetch=FetchType.EAGER,
+	 cascade=CascadeType.PERSIST)
+	@JsonIgnore
 	private Collection<User> friends;
-	@ManyToMany(mappedBy="users")//(fetch=FetchType.EAGER)
-	//@JsonIgnore
+	@ManyToMany(mappedBy = "users")
+	// (fetch=FetchType.EAGER)
+	@JsonIgnore
 	private Collection<Plan> plans;
-	
 
 	public int getId() {
 		return id;
@@ -161,7 +162,5 @@ public class User {
 	public void setPlans(Collection<Plan> plans) {
 		this.plans = plans;
 	}
-	
-	
 
 }

@@ -4,18 +4,23 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public abstract class BasicManager {
+public class BasicManager {
 	
-	protected EntityManagerFactory emf;
-	protected EntityManager em;
+	static public EntityManagerFactory emf;
+	static public EntityManager em;
 
-	protected void beginPersitence() {
+	
+	static {
 		emf = Persistence.createEntityManagerFactory("endomondo");
 		em = emf.createEntityManager();
 	}
-
-	protected void endPersitence() {
-		em.close();
-		emf.close();
-	}
+//	protected void beginPersitence() {
+//		emf = Persistence.createEntityManagerFactory("endomondo");
+//		em = emf.createEntityManager();
+//	}
+//
+//	protected void endPersitence() {
+//		em.close();
+//		emf.close();
+//	}
 }

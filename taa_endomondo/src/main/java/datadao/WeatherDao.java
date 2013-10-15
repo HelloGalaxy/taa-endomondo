@@ -6,21 +6,19 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import model.database.CoordGPS;
+import model.database.Route;
 import model.database.Weather;
 
-public class WeatherDao {
-
-	EntityManager em;
+public class WeatherDao extends DataDao {
 
 	public WeatherDao(EntityManager em) {
-		this.em = em;
+		super(em);
 	}
 
 	public Weather getWeatherById(int id) {
 
-		String queryString = "select obj from Weather as obj where obj.id=:itsID";
-		Query query = em.createQuery(queryString).setParameter("itsID", id);
-		Weather model = (Weather) query.getSingleResult();
+		Weather model = em.find(Weather.class, id);
 
 		return model;
 	}
@@ -48,7 +46,6 @@ public class WeatherDao {
 			String queryString = "select obj from Weather as obj where obj.city like '%"
 					+ city + "%'";
 			Query query = em.createQuery(queryString);
-			//query.setParameter(0, city);
 			List<Weather> results = query.getResultList();
 
 			return results;
@@ -57,5 +54,66 @@ public class WeatherDao {
 		}
 
 		return null;
+	}
+	
+	public boolean create(Weather obj) {
+
+		tx = null;
+		try {
+			tx = em.getTransaction();
+			tx.begin();
+			em.persist(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean update(Weather obj) {
+
+		tx = null;
+		try {
+
+			tx = em.getTransaction();
+			tx.begin();
+			em.merge(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean delete(int id) {
+
+		tx = null;
+		try {
+
+			tx = em.getTransaction();
+			tx.begin();
+			Weather obj = getWeatherById(id);
+
+			if (obj == null)
+				return false;
+
+			em.remove(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
 	}
 }

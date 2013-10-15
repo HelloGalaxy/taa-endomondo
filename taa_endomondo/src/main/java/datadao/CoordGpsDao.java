@@ -15,12 +15,9 @@ public class CoordGpsDao extends DataDao {
 	}
 
 	public CoordGPS getCoordGPSById(int id) {
+		
+		CoordGPS coord = em.find(CoordGPS.class, id);
 
-		// String queryString =
-		// "select gps from CoordGPS as gps where gps.id=:itsID";
-		// Query query = em.createQuery(queryString).setParameter("itsID", id);
-		CoordGPS coord = em.find(CoordGPS.class, id); // (CoordGPS)
-														// query.getSingleResult();
 		return coord;
 	}
 

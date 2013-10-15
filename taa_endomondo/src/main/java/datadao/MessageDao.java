@@ -1,6 +1,5 @@
 package datadao;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -8,22 +7,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import model.database.Message;
-import model.database.Plan;
-import model.database.User;
+import model.database.Route;
 
-public class MessageDao {
-
-	EntityManager em;
+public class MessageDao extends DataDao {
 
 	public MessageDao(EntityManager em) {
-		this.em = em;
+		super(em);
 	}
 
 	public Message getMessageById(int id) {
 
-		String queryString = "select obj from Message as obj where obj.id=:itsID";
-		Query query = em.createQuery(queryString).setParameter("itsID", id);
-		Message model = (Message) query.getSingleResult();
+		//String queryString = "select obj from Message as obj where obj.id=:itsID";
+		//Query query = em.createQuery(queryString).setParameter("itsID", id);
+		Message model = em.find(Message.class, id);//(Message) query.getSingleResult();
 
 		return model;
 	}
@@ -37,16 +33,14 @@ public class MessageDao {
 			String queryString = "select obj from Message as obj ";
 			Query query = em.createQuery(queryString);
 			List<Message> results = query.getResultList();
-			
-			for (Message m : results){
-				m.getFrom().setPlans(new ArrayList<Plan>());
-				m.getFrom().setFriends(new ArrayList<User>());
-				m.getTo().setPlans(new ArrayList<Plan>());
-				m.getTo().setFriends(new ArrayList<User>());
-			}
-			
-			
-			
+
+			// for (Message m : results){
+			// m.getFrom().setPlans(new ArrayList<Plan>());
+			// m.getFrom().setFriends(new ArrayList<User>());
+			// m.getTo().setPlans(new ArrayList<Plan>());
+			// m.getTo().setFriends(new ArrayList<User>());
+			// }
+
 			return results;
 		} catch (RuntimeException e) {
 			System.out.println(e.toString());
@@ -61,4 +55,66 @@ public class MessageDao {
 		Message model = (Message) query.getSingleResult();
 		return null;
 	}
+	
+	public boolean create(Message obj) {
+
+		tx = null;
+		try {
+			tx = em.getTransaction();
+			tx.begin();
+			em.persist(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean update(Message obj) {
+
+		tx = null;
+		try {
+
+			tx = em.getTransaction();
+			tx.begin();
+			em.merge(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean delete(int id) {
+
+		tx = null;
+		try {
+
+			tx = em.getTransaction();
+			tx.begin();
+			Message obj = getMessageById(id);
+
+			if (obj == null)
+				return false;
+
+			em.remove(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
+	
 }

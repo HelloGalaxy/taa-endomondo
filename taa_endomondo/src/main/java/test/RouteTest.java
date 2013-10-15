@@ -71,11 +71,11 @@ public class RouteTest {
 
 			tx.commit();
 
-		} catch (RuntimeException e) {
+		} catch (Exception e) {
 
 			if (tx != null && tx.isActive())
 				tx.rollback();
-			throw e;
+			System.out.println(e);
 		} finally {
 			em.close();
 		}

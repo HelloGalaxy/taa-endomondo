@@ -19,7 +19,6 @@ public class Route {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@OneToMany(fetch=FetchType.EAGER)
-	// @JsonManagedReference
 	private Collection<CoordGPS> coordGpsList;
 
 	public Route() {

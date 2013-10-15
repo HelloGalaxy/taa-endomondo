@@ -2,7 +2,6 @@ package service;
 
 import java.util.Collection;
 
-import javax.swing.text.StyledEditorKit.BoldAction;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import model.database.CoordGPS;
 import datadao.CoordGpsDao;
 
+
 /*
  * getCoordByID
  * getAllCoords
@@ -23,17 +23,16 @@ import datadao.CoordGpsDao;
  */
 
 @Path("/gps")
-public class CoordGpsManager extends BasicManager {
+public class CoordGpsManager  {
 
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public CoordGPS getCoordById(@PathParam("id") int id) {
 
-		beginPersitence();
-		CoordGpsDao dataManager = new CoordGpsDao(em);
+
+		CoordGpsDao dataManager = new CoordGpsDao(BasicManager.em);
 		CoordGPS coord = dataManager.getCoordGPSById(id);
-		endPersitence();
 
 		return coord;
 
@@ -44,10 +43,10 @@ public class CoordGpsManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Collection<CoordGPS> getAllCoords() {
 
-		beginPersitence();
-		CoordGpsDao dataManager = new CoordGpsDao(em);
+
+		CoordGpsDao dataManager = new CoordGpsDao(BasicManager.em);
 		Collection<CoordGPS> coords = dataManager.getAllCoordGPSs();
-		endPersitence();
+
 		return coords;
 	}
 
@@ -56,11 +55,11 @@ public class CoordGpsManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public boolean createCoord(CoordGPS gps) {
 
-		beginPersitence();
-		CoordGpsDao dataManager = new CoordGpsDao(em);
+	
+		CoordGpsDao dataManager = new CoordGpsDao(BasicManager.em);
 		gps.setId(0);
 		boolean result = dataManager.createCoordGPS(gps);
-		endPersitence();
+
 		return result;
 	}
 
@@ -69,10 +68,10 @@ public class CoordGpsManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public boolean updateCoord(CoordGPS gps) {
 
-		beginPersitence();
-		CoordGpsDao dataManager = new CoordGpsDao(em);
+
+		CoordGpsDao dataManager = new CoordGpsDao(BasicManager.em);
 		boolean result = dataManager.updateCoordGPS(gps);
-		endPersitence();
+
 		return result;
 	}
 
@@ -81,10 +80,10 @@ public class CoordGpsManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public boolean deleteCoord(@PathParam("id") int id) {
 
-		beginPersitence();
-		CoordGpsDao dataManager = new CoordGpsDao(em);
+
+		CoordGpsDao dataManager = new CoordGpsDao(BasicManager.em);
 		boolean result = dataManager.deleteCoordGPS(id);
-		endPersitence();
+
 
 		return result;
 	}

@@ -6,21 +6,18 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import model.database.CoordGPS;
 import model.database.Route;
 
-public class RouteDao {
-	EntityManager em;
+public class RouteDao extends DataDao {
 
 	public RouteDao(EntityManager em) {
-		this.em = em;
+		super(em);
 	}
 
 	public Route getRouteById(int id) {
 
-		String queryString = "select obj from Route as obj where obj.id=:itsID";
-		Query query = em.createQuery(queryString).setParameter("itsID", id);
-		Route model = (Route) query.getSingleResult();
-
+		Route model =  em.find(Route.class, id);
 		return model;
 	}
 
@@ -39,5 +36,66 @@ public class RouteDao {
 		}
 
 		return null;
+	}
+	
+	public boolean create(Route obj) {
+
+		tx = null;
+		try {
+			tx = em.getTransaction();
+			tx.begin();
+			em.persist(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean update(Route obj) {
+
+		tx = null;
+		try {
+
+			tx = em.getTransaction();
+			tx.begin();
+			em.merge(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean delete(int id) {
+
+		tx = null;
+		try {
+
+			tx = em.getTransaction();
+			tx.begin();
+			Route obj = getRouteById(id);
+
+			if (obj == null)
+				return false;
+
+			em.remove(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
 	}
 }

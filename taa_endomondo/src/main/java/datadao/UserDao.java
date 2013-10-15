@@ -1,18 +1,17 @@
 package datadao;
 
-import java.util.ArrayList;
 import java.util.Collection;
+
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
+
 import model.database.User;
 
-public class UserDao {
+public class UserDao extends DataDao {
 
-	EntityManager _em;
 
 	public UserDao(EntityManager entman) {
-		_em = entman;
+		super(entman);
 	}
 
 	/**
@@ -20,25 +19,19 @@ public class UserDao {
 	 * 
 	 * @boussad
 	 * */
-	public Collection<String> getAllUsers() {
+	public Collection<User> getAllUsers() {
 
 		try {
 
 			String queryString = "SELECT us FROM User  as  us ";
-			Query query = _em.createQuery(queryString);
+			Query query = em.createQuery(queryString);
 			// get the list of all the users
-			ArrayList<User> liusr = (ArrayList<User>) query.getResultList();
-			ArrayList<String>  liusrStr= new ArrayList();
-			for (int i = 0; i < liusr.size(); i++) {
-				User user =  liusr.get(i);
-				String onusr = String.valueOf(i)+" : "+user.getFirstname()+" : "+user.getLastname()+" : "+user.getEmail()+" : "+user.getFacebook()+"\n";
-			    liusrStr.add(onusr); 	
-			}
-			
-			return liusrStr;
-	
+			Collection<User> resluts = query.getResultList();
+
+			return resluts;
+
 		} catch (RuntimeException e) {
-			System.out.println("Exception caught while trying to in USERDao");
+			System.out.println(e.toString());
 		}
 		return null;
 	}
@@ -50,42 +43,104 @@ public class UserDao {
 	 * 
 	 * @author : boussad
 	 * */
-	public String userById(int iduser) {
+	public User getUserById(int iduser) {
 
 		String queryString1 = "SELECT  usr  FROM  User AS usr where usr.id=:idf  ";
 
 		try {
-			Query query1 = _em.createQuery(queryString1).setParameter("idf",
+			Query query1 = em.createQuery(queryString1).setParameter("idf",
 					iduser);
 			User usr = (User) query1.getSingleResult();
-			return (usr.getLastname() + " " + usr.getFirstname());
+			return usr;
 
-		} catch (NoResultException notfound) {
-			System.out.println("User returened is null  .... ");
-			return "";
+		} catch (Exception e) {
+			System.out.println(e);
 		}
+
+		return null;
 	}
-	
+
 	/**
-	 * @B
-	 *   Search   first name and the last name of the user give the email of the user 
+	 * @B Search first name and the last name of the user give the email of the
+	 *    user
 	 * */
-	
-	public String userByEmail(String _mail) {
+
+	public User getUserByEmail(String _mail) {
 
 		String queryString1 = "SELECT  usr  FROM  User AS usr where usr.email=:mail  ";
 
 		try {
-			Query query1 = _em.createQuery(queryString1).setParameter("mail",
-			 		_mail);
+			Query query1 = em.createQuery(queryString1).setParameter("mail",
+					_mail);
 			User usr = (User) query1.getSingleResult();
-		   	return (usr.getLastname() + " " + usr.getFirstname());
+			return usr;
 
-	    	} catch (NoResultException notfound) {
-	 		System.out.println("User returened when fatching by mail is null  .... ");
-			return "";
+		} catch (Exception e) {
+			System.out.println(e.toString());
+
 		}
-		
+
+		return null;
 	}
-	
+
+	public boolean create(User obj) {
+
+		tx = null;
+		try {
+			tx = em.getTransaction();
+			tx.begin();
+			em.persist(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean update(User obj) {
+
+		tx = null;
+		try {
+
+			tx = em.getTransaction();
+			tx.begin();
+			em.merge(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean delete(int id) {
+
+		tx = null;
+		try {
+
+			tx = em.getTransaction();
+			tx.begin();
+			User obj = getUserById(id);
+
+			if (obj == null)
+				return false;
+
+			em.remove(obj);
+			tx.commit();
+			tx = null;
+
+		} catch (RuntimeException e) {
+			System.out.println(e.toString());
+			return false;
+		}
+
+		return true;
+	}
 }

@@ -26,10 +26,10 @@ public class WeatherManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Weather getWeatherById(@PathParam("id") int id) {
 
-		beginPersitence();
+
 		WeatherDao dataManager = new WeatherDao(em);
 		Weather model = dataManager.getWeatherById(id);
-		endPersitence();
+
 
 		return model;
 
@@ -40,10 +40,10 @@ public class WeatherManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Collection<Weather> getWeathers(@PathParam("id") int id) {
 
-		beginPersitence();
+	
 		WeatherDao dataManager = new WeatherDao(em);
 		Collection<Weather> models = dataManager.getAllWeathers();
-		endPersitence();
+
 
 		return models;
 
@@ -54,10 +54,10 @@ public class WeatherManager extends BasicManager {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Collection<Weather> getWheathersByCity(@PathParam("city") String city) {
 
-		beginPersitence();
+
 		WeatherDao dataManager = new WeatherDao(em);
 		Collection<Weather> models = dataManager.getWheathersByCity(city);
-		endPersitence();
+
 
 		return models;
 

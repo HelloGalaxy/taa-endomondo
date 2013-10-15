@@ -3,7 +3,7 @@ package datadao;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-public abstract class DataDao<T> {
+public abstract class DataDao {
 
 	protected EntityManager em;
 
