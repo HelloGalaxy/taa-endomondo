@@ -45,8 +45,8 @@ public class MessageManager {
 		MessageDao dataManager = new MessageDao(em);
 		Message model = dataManager.getMessageById(id);
 		// endPersitence();
-		model.getFromWho().getFriends().clear();
-		model.getFromWho().getPlans().clear();
+		//model.getFromWho().getFriends().clear();
+		//model.getFromWho().getPlans().clear();
 
 		return model;
 

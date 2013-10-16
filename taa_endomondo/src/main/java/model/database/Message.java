@@ -14,10 +14,9 @@ public class Message {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	// @JoinColumn(name="fromf")
 	private User fromwho;
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	// @JoinColumn(name="tof")
+	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE })
 	private User towho;
 	private String content;
 
