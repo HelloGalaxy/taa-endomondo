@@ -1,11 +1,13 @@
 package model.database;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 public class Plan {
@@ -33,8 +37,9 @@ public class Plan {
 	private Weather weather;
 	@Enumerated(EnumType.STRING)
 	private SportType sportType;
-	@ManyToMany
-	private Collection<User> users;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, mappedBy = "plans")
+	@JsonIgnore
+	private Set<User> users;
 
 	private float avgHeartRate;
 
@@ -116,6 +121,14 @@ public class Plan {
 
 	public void setAvgHeartRate(float avgHeartRate) {
 		this.avgHeartRate = avgHeartRate;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
 }

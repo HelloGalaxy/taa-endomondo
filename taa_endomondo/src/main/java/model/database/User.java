@@ -1,8 +1,7 @@
 package model.database;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.LinkedList;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -38,14 +37,12 @@ public class User {
 	private String facebook;
 	@Temporal(TemporalType.DATE)
 	private Date joindate;
-	@ManyToMany(fetch=FetchType.EAGER,
-	 cascade=CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JsonIgnore
-	private Collection<User> friends;
-	@ManyToMany(mappedBy = "users")
-	// (fetch=FetchType.EAGER)
+	private Set<User> friends;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JsonIgnore
-	private Collection<Plan> plans;
+	private Set<Plan> plans;
 
 	public int getId() {
 		return id;
@@ -56,7 +53,7 @@ public class User {
 	}
 
 	public User() {
-		friends = new LinkedList<User>();
+
 	}
 
 	public String getEmail() {
@@ -147,19 +144,19 @@ public class User {
 		this.joindate = joindate;
 	}
 
-	public Collection<User> getFriends() {
+	public Set<User> getFriends() {
 		return friends;
 	}
 
-	public void setFriends(Collection<User> friends) {
+	public void setFriends(Set<User> friends) {
 		this.friends = friends;
 	}
 
-	public Collection<Plan> getPlans() {
+	public Set<Plan> getPlans() {
 		return plans;
 	}
 
-	public void setPlans(Collection<Plan> plans) {
+	public void setPlans(Set<Plan> plans) {
 		this.plans = plans;
 	}
 
