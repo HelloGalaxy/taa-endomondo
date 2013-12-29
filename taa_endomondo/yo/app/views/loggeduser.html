@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+       <title> Logged User Page </title>
+       <meta name="viewport"  content="width=device-width, initial-scale=1.0">
+       <link href="views/css/bootstrap.min.css"  rel="stylesheet">
+       <link href="views/css/style.css"  rel="stylesheet">
+       <link rel="stylesheet" href="styles/main.css">
+       <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    </head>
+  
+   <body> 
+    
+        <!--  Top navigation bar    -->
+       <div class="navbar navbar-inverse  navbar-static-top" >
+        
+          <div class="container">
+                 <a href  ="#" class="navbar-brand">Endomondo like </a>
+
+                 <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+                      <span class="icon-bar"> </span>
+                      <span class="icon-bar"> </span>
+                      <span class="icon-bar"> </span>
+                 </button> 
+                  
+                 <div class="collapse navbar-collapse navHeaderCollapse">  
+                   
+                     <ul class="nav navbar-nav navbar-right">
+                         <li > <a href="#">Home </a></li>
+                         <li  class="dropdown"> <!--<a href="#">Social Media  </a> -->
+                               <a href="#" class="dropdown"  data-toggle="dropdown">Social Media <b class="caret"></b></a>
+                                <ul  class="dropdown-menu">
+                                   <li><a href="#">Twitter   </a></li>
+                                   <li><a href="#"> FaceBook  </a></li>
+                                   <li><a href="#"> Google+ </a> </li>
+                                   <li><a href="#"> Yahoo</a>  </li>
+                                </ul>
+                         </li>
+                         <li> <a href="#">Contact </a></li>
+                     </ul>
+                 </div>
+          </div>
+
+       </div>
+     
+       <!--   effectif content   -->
+      <!--  <div ng-controller="UserCtrl">
+            Hello Mister  {{visitorsession }},</br>
+            <div>
+	   -->
+	    <div ng-repeat="vis in visitorsession">
+	        Heloo {{vis}} </br>
+	    </div>		   
+	    <button class="default" ng-click="signOut()" >signout</button>
+	   
+	   	   
+           </br>
+        
+               <div class="container">
+                  <div  class="jumbotron">
+					  <h2><a href="#/displayplans"> Challenges</a> </h2> <i class="icon-flag"></i> </br>
+			          <h2><a href="#/displayusers">Registered users</a></h2> <i class="icon-user"></i></br> 
+			          <h2><a href="#/newworkout"> New work out </a> </h2> <i class="icon-flag"></i> </br>  
+			          <h2><a href="#"> Add a friend  </a> </h2> <i class="icon-user"></i> </br> 
+			          <h2> <a href="#/sendmssg">Send message </a> </h2> <i class="icon-envelope"></i>
+			          <h2> <a ng-click="messgSend()">Send message Test</a> </h2> <i class="icon-envelope"></i>
+			          <h2> more ... </h2> </br>
+			      </div>
+			   </div>
+           
+              
+           
+       <!-- End of effectif content  -->
+       
+       <!-- footer -->
+       <div  class="navbar navbar-default navbar-fixed-bottom">  
+            <div  class="container">
+              <p  class="navbar-text">  Site built for endemondo sport tracking</p>
+              <a href="http://youtube.com"  class="navbar-btn  btn-danger btn  pull-right"> Subscribe on Youtub</a>
+              
+             </div>
+       </div>
+       
+    <!--   Put the scripts at the end so that the page load faster  -->
+	     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	     <script src="views/js/bootstrap.js"></script>
+    <!--   .....   -->
+     
+     
+
+   </body>
+</html>

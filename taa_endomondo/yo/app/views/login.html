@@ -1,0 +1,43 @@
+  <html>
+    <head> 
+       <title> Boostrape </title>
+       <meta name="viewport"  content="width=device-width, initial-scale=1.0">
+       <link href="views/css/bootstrap.min.css"  rel="stylesheet">
+       <link href="views/css/style.css"  rel="stylesheet">
+       <link rel="stylesheet" href="styles/main.css">
+    </head>
+  
+   <body> 
+  
+    <form  class="well">
+   
+		<h1> Please enter you Identifiers </h1>  
+		</br>
+		Nick name </br>
+		<input type="text" class="span2" data-ng-model="visitor.nickname">
+		</br> Mail  </br>
+		<input type="text" class="span2" data-ng-model="visitor.mail">
+		</br>
+		<button type="submit" class="btn" data-ng-click="loginRRR()">Login</button>
+		
+   </form>
+  
+     <a href="#" > Home </a>
+        <div ng-repeat="vis in visitorsession">
+	        Heloo {{vis}} </br>
+	    </div>	
+	    
+	  <div ng-controller="UserCtrl">
+            Hello Mister  {{loggedUser}},</br>
+       <div>
+			  
+    <!--   Put the scripts at the end so that the page load faster  -->
+	     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	     <script src="views/js/bootstrap.js"></script>
+    <!--   .....   -->
+		
+		 
+
+</body>
+
+</html>

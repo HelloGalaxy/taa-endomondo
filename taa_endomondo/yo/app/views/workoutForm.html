@@ -1,0 +1,105 @@
+  <html>
+    <head> 
+       <title> Work out Form </title>
+       <meta name="viewport"  content="width=device-width, initial-scale=1.0">
+       <link href="views/css/bootstrap.min.css"  rel="stylesheet">
+       <link href="views/css/style.css"  rel="stylesheet">
+       <link rel="stylesheet" href="styles/main.css">
+      <style>
+         .form_col {
+			  display: inline-block;
+			  margin-right: 15px;
+			  padding: 3px 0px;
+			  width: 200px;
+			  min-height: 1px;
+			  text-align: left;
+			}
+				  
+      </style>
+  
+    </head>
+   <body> 
+   
+   
+    <!--  Top navigation bar    -->
+       <div class="navbar navbar-inverse  navbar-static-top" >
+        
+          <div class="container">
+                 <a href  ="#" class="navbar-brand">Endomondo like </a>
+
+                 <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+                      <span class="icon-bar"> </span>
+                      <span class="icon-bar"> </span>
+                      <span class="icon-bar"> </span>
+                 </button> 
+                  
+                 <div class="collapse navbar-collapse navHeaderCollapse">  
+                   
+                     <ul class="nav navbar-nav navbar-right">
+                         <li > <a href="#">Home </a></li>
+                         <li  class="dropdown"> <!--<a href="#">Social Media  </a> -->
+                               <a href="#" class="dropdown"  data-toggle="dropdown">Social Media <b class="caret"></b></a>
+                                <ul  class="dropdown-menu">
+                                   <li><a href="#">Twitter   </a></li>
+                                   <li><a href="#"> FaceBook  </a></li>
+                                   <li><a href="#"> Google+ </a> </li>
+                                   <li><a href="#"> Yahoo</a>  </li>
+                                </ul>
+                         </li>
+                         <li> <a href="#">Contact </a></li>
+                     </ul>
+                 </div>
+          </div>
+
+       </div>
+     <h2>    WorkOut Registration  form : </h2>   </br>
+   
+     <form novalidate class="well" id="formWorkOut" >
+       
+       <label class="form_col">Title     :</label>  <input type="text"    data-ng-model="newWOut.title">  </br>
+        <label class="form_col">Note     :</label><input type="text"  data-ng-model="newWOut.note">  </br>
+        <label class="form_col">Star DATE     :</label> <input type="text"  data-ng-model="newWOut.startdate">   ex : 2013-6-5 </br>
+       <label class="form_col">End date    :</label> <input type="text"  data-ng-model="newWOut.enddate"> </br>
+       <label class="form_col">Weather     :</label> <input list="weather"  type="text"  data-ng-model="newWOut.weather" id="choix_weather">
+				   <datalist id="weather">
+					    <option value="SUNNY">
+					    <option value="CLOUDY">
+					    <option value="RAINY">
+					</datalist>
+		</br>			
+		Route : (please enter coordinates {long, lati, att},{...})  </br>			
+         <textarea rows="4" cols="50" maxlength="100" data-ng-model="newWOutroute.content">
+                 Enter the coordinates here...
+        </textarea> 
+        </br>
+        <button value="reset" onclick="formReset()" >RESET</button>
+        <button class="btn btn-success"  data-ng-click="registerPlan()" >SAVE</button>
+        
+     </form>
+   
+     <!-- a script to reset the form -->
+     
+     <script>
+          function  formReset(){
+			    document.getElementById("formWorkOut").reset();
+	       }
+     </script>
+   
+   
+    <!-- footer -->
+       <div  class="navbar navbar-default navbar-fixed-bottom">  
+            <div  class="container">
+              <p  class="navbar-text">  Site built for endemondo sport tracking</p>
+              <a href="http://youtube.com"  class="navbar-btn  btn-danger btn  pull-right"> Subscribe on Youtub</a>
+              
+             </div>
+       </div>
+   
+    <!--   Put the scripts at the end so that the page load faster  -->
+	     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	     <script src="views/js/bootstrap.js"></script>
+    <!--   .....   -->
+   
+   </body>
+   
+   </html>
