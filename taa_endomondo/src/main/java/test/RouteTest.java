@@ -1,5 +1,6 @@
 package test;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,13 +29,13 @@ public class RouteTest {
 			tx = em.getTransaction();
 			tx.begin();
 
-			int count = 10;
+			int count = 1;
 
 			Random random = new Random();
 
 			for (int i = 0; i < count; i++) {
 				Route model = new Route();
-				em.persist(model);
+				//em.persist(model);
 
 				
 				// We should create a new object, if not, it can not be persisted in DB
@@ -52,16 +53,17 @@ public class RouteTest {
 //					model.setCoordListGps(coords);
 //				}
 				
-				Collection<CoordGPS> newCoords = new LinkedList<CoordGPS>();
-				for (int j = 0; j < 10; j++) {				
+				Collection<CoordGPS> newCoords = new ArrayList<CoordGPS>();
+				for (int j = 0; j < 2; j++) {				
 					
 					CoordGPS coord = new CoordGPS();
-					em.persist(coord);
+					//em.persist(coord);
 
 					coord.setAttitude(random.nextInt(8848));
 					coord.setLatitude(random.nextInt(180) - 90);
 					coord.setLongitude(random.nextInt(360) - 180);
 					
+					coord.setRoute(model);
 					newCoords.add(coord);
 				}
 				

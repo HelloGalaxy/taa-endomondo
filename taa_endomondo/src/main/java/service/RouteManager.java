@@ -1,5 +1,6 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
@@ -15,7 +16,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import model.database.CoordGPS;
 import model.database.Route;
+import datadao.CoordGpsDao;
 import datadao.RouteDao;
 
 /*
@@ -41,7 +44,7 @@ public class RouteManager {
 
 		RouteDao dataManager = new RouteDao(em);
 		Route model = dataManager.getRouteById(id);
-
+        if(model==null)  return null;
 		return model;
 	}
 
@@ -69,6 +72,28 @@ public class RouteManager {
 		return result;
 	}
 
+	/* Ajouter une coordonnée pour cette route , identifiée par id */
+	
+	@POST
+	@Path("{id}/addCoord")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public boolean addCoordinateToRoute(CoordGPS obj,@PathParam("id") int id ) {
+
+		RouteDao dataManager = new RouteDao(em);
+		Route Rt = dataManager.getRouteById(id);
+		//Collection<CoordGPS> newCoords = new ArrayList<CoordGPS>();
+		//newCoords.add(obj);
+		obj.setRoute(Rt);
+		//Rt.setCoordListGps(newCoords);
+		Rt.addCoordinate(obj);
+		//boolean result = dataManager.create(Rt);
+		return dataManager.update(Rt);
+	}
+	
+	
+	
+	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -84,10 +109,8 @@ public class RouteManager {
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public boolean deleteCoord(@PathParam("id") int id) {
-
 		RouteDao dataManager = new RouteDao(em);
 		boolean result = dataManager.delete(id);
-
 		return result;
 	}
 }

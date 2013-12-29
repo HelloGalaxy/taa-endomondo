@@ -33,7 +33,7 @@ public class UserTest {
 			// Do some stuff
 
 			// 1: create a first user ...
-			User us1 = new model.database.User();
+		/*	User us1 = new model.database.User();
 			us1.setEmail("us1@yahoo.fr");
 			em.persist(us1);
 			Date joind = new Date();
@@ -65,22 +65,59 @@ public class UserTest {
 			us2.setNickname("us2NickName");
 			us2.setFirstname("Jacky");
 			us2.setLastname("chen");
-
-			// creation of plan
-			Plan plan1 = new Plan();
-			em.persist(plan1);
+            // create a thir user 
+			User us3 = new model.database.User();
+			us3.setEmail("us3@gmail.fr");
+			em.persist(us3);
+			Date joind3 = new Date();
+			joind.setDate(9 / 7 / 2011);
+			Date birth3 = new Date();
+			birth.setDate(9 / 7 / 1984);
+			us3.setBirthday(birth);
+			us3.setJoindate(joind);
+			us3.setSex(Sex.Male);
+			us3.setFacebook("facebook/us3.fr");
+			us3.setHeight((float) 1.72);
+			us3.setNickname("us3NickName");
+			us3.setFirstname("Alan");
+			us3.setLastname("michel");
 			
+			// creation of plans
+			  // first plan
+		/*	Plan plan1 = new Plan();
+			em.persist(plan1);
 			plan1.setAvgHeartRate(0);
 			plan1.setEndDate(new Date(2013, 10, 20, 15, 0));
 			plan1.setNote("Running in the centre place");
 			plan1.setStartDate(new Date(2013, 10, 20, 10, 40));
-			plan1.setTitle("Ah...");
+			plan1.setTitle("Runing seance");
 			plan1.setSportType(SportType.Running);
 			
+			 //second plan
 			
+			Plan plan2 = new Plan();
+			em.persist(plan2);
+			plan2.setAvgHeartRate(0);
+			plan2.setEndDate(new Date(2013, 10, 20, 15, 0));
+			plan2.setNote("Swiming in ville jean");
+			plan2.setStartDate(new Date(2013, 10, 20, 10, 40));
+			plan2.setTitle("swimming seance");
+			plan2.setSportType(SportType.Swimming);*/
+			
+			
+			// fix the friend ship relations
+			
+			
+			//us1.addFriend(us2);
+			
+			// set the plans 
+			
+			// fixe les plans pour les utilisateurs  
+			 //us1.addPlan(plan1);
 			// commit the transaction
 
 			// Ready to commit
+			
 			tx.commit();
 
 		} catch (RuntimeException e) {

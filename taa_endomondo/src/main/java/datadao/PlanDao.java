@@ -1,5 +1,6 @@
 package datadao;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,8 @@ public class PlanDao extends DataDao {
 			Query query1 = em.createQuery(queryString);
 			System.out.println(query1);
 			List<Plan> li = query1.getResultList();
-
+			//clear the users from each plan
+			clearUsers((ArrayList<Plan>) li); 
 			return li;
 
 		} catch (Exception e) {
@@ -39,6 +41,8 @@ public class PlanDao extends DataDao {
 	public Plan getPlanById(int Id) {
 
 		Plan pl = em.find(Plan.class, Id);
+		// clear the user
+     	pl.setUsers(new ArrayList());
 		return pl;
 
 	}
@@ -111,7 +115,7 @@ public class PlanDao extends DataDao {
 		}
 	}*/
 
-	public boolean createPlan(Plan p) {
+	public int createPlan(Plan p) {
 
 		tx = null;
 		try {
@@ -123,10 +127,10 @@ public class PlanDao extends DataDao {
 
 		} catch (RuntimeException e) {
 			System.out.println(e.toString());
-			return false;
+			return 0;
 		}
 
-		return true;
+		return p.getId();
 	}
 
 	public boolean updatePlan(Plan p) {
@@ -171,5 +175,11 @@ public class PlanDao extends DataDao {
 
 		return true;
 	}
-
+	
+  public void clearUsers(ArrayList<Plan> liplan){
+	  for(int i=0 ; i< liplan.size(); i++){
+		  liplan.get(i).setUsers(null);
+	  }
+  }
+	
 }

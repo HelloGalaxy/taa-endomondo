@@ -65,12 +65,12 @@ public class CoordGpsManager  {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public boolean createCoord(CoordGPS gps) {
+	public int createCoord(CoordGPS gps) {
 
 	
 		CoordGpsDao dataManager = new CoordGpsDao(em);
-		gps.setId(0);
-		boolean result = dataManager.createCoordGPS(gps);
+		//gps.setId(0);
+		int result = dataManager.createCoordGPS(gps);
 
 		return result;
 	}

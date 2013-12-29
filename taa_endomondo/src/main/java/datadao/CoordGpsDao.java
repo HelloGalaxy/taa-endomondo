@@ -38,7 +38,7 @@ public class CoordGpsDao extends DataDao {
 		return null;
 	}
 
-	public boolean createCoordGPS(CoordGPS gps) {
+	public int createCoordGPS(CoordGPS gps) {
 
 		tx = null;
 		try {
@@ -50,10 +50,10 @@ public class CoordGpsDao extends DataDao {
 
 		} catch (RuntimeException e) {
 			System.out.println(e.toString());
-			return false;
+			return gps.getId();
 		}
 
-		return true;
+		return gps.getId();
 	}
 
 	public boolean updateCoordGPS(CoordGPS gps) {

@@ -2,10 +2,14 @@ package model.database;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
 
 @Entity
 public class CoordGPS implements Serializable {
@@ -22,8 +26,12 @@ public class CoordGPS implements Serializable {
 	// @OneToOne
 	// @JsonBackReference
 	// private CoordGPS coordGPS;
-
-	public int getId() {
+	
+	@ManyToOne (cascade = CascadeType.ALL)
+	
+	@JsonBackReference private Route route;
+	
+    public int getId() {
 		return id;
 	}
 
@@ -55,6 +63,9 @@ public class CoordGPS implements Serializable {
 		this.attitude = attitude;
 	}
 
+	public void setRoute(Route route){
+		this.route=route;
+	}
 	// public CoordGPS getCoordGPS() {
 	// return coordGPS;
 	// }

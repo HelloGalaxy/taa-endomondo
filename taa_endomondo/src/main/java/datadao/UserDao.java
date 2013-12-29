@@ -1,7 +1,10 @@
 package datadao;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.naming.spi.DirStateFactory.Result;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -26,9 +29,12 @@ public class UserDao extends DataDao {
 			String queryString = "SELECT us FROM User  as  us ";
 			Query query = em.createQuery(queryString);
 			// get the list of all the users
-			Collection<User> resluts = query.getResultList();
-
-			return resluts;
+			Collection<User> results = query.getResultList();			
+			// clear the list of plans and fiends
+			 
+			    clearFriendsPlansFromList((ArrayList<User>) results);   	 
+			
+			 return results;
 
 		} catch (RuntimeException e) {
 			System.out.println(e.toString());
@@ -51,6 +57,9 @@ public class UserDao extends DataDao {
 			Query query1 = em.createQuery(queryString1).setParameter("idf",
 					iduser);
 			User usr = (User) query1.getSingleResult();
+		    //  clear plans and friends
+			clearFriendsPlans(usr);
+			
 			return usr;
 
 		} catch (Exception e) {
@@ -73,16 +82,41 @@ public class UserDao extends DataDao {
 			Query query1 = em.createQuery(queryString1).setParameter("mail",
 					_mail);
 			User usr = (User) query1.getSingleResult();
+			//  clear plans and friends
+			clearFriendsPlans(usr);
+			
 			return usr;
 
-		} catch (Exception e) {
-			System.out.println(e.toString());
-
+		} catch (javax.persistence.NoResultException e) {
+			   System.out.println("Entity user requested Note found"); 
+			  return null;
 		}
 
-		return null;
+		
 	}
 
+	public User getUserByNickNameEmail(String _nickname,String _mail ) {
+
+		String queryString1 = "SELECT  usr  FROM  User AS usr where usr.nickname=:nikname and usr.email=:mail";
+
+		try {
+			   Query query1 = em.createQuery(queryString1);
+			   query1.setParameter("nikname",_nickname);
+			   query1.setParameter("mail",_mail);
+			
+			   User usr = (User) query1.getSingleResult();
+			   //  clear plans and friends		
+			   clearFriendsPlans(usr);
+		 	   System.out.println("Entity user requested found");
+			   return usr;
+
+		   } catch (javax.persistence.NoResultException e) {
+			   System.out.println("Entity user requested Note found"); 
+			  return null;
+		}
+	
+	}
+	
 	public boolean create(User obj) {
 
 		tx = null;
@@ -143,4 +177,18 @@ public class UserDao extends DataDao {
 
 		return true;
 	}
+	
+	public void clearFriendsPlansFromList(ArrayList<User> usrli){
+		   
+		    for(int i=0 ; i< usrli.size(); i++){
+		    	clearFriendsPlans(usrli.get(i));
+		    }
+     }
+	
+	public void clearFriendsPlans(User usr){
+	   if(usr==null)   return;
+	   usr.setFriends(new ArrayList());
+	   usr.setPlans(new ArrayList());
+	}
+
 }

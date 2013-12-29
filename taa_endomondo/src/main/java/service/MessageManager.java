@@ -16,7 +16,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.database.Message;
+import model.database.User;
 import datadao.MessageDao;
+import datadao.UserDao;
 
 /*
  * getMessageById
@@ -82,7 +84,7 @@ public class MessageManager {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public boolean createCoord(Message obj) {
+	public boolean createMessage(Message obj) {
 
 		// beginPersitence();
 		MessageDao dataManager = new MessageDao(em);
@@ -95,7 +97,7 @@ public class MessageManager {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public boolean updateCoord(Message obj) {
+	public boolean updateMessage(Message obj) {
 
 		MessageDao dataManager = new MessageDao(em);
 		boolean result = dataManager.update(obj);
@@ -103,6 +105,35 @@ public class MessageManager {
 		return result;
 	}
 
+	
+	
+	@POST
+	@Path("send/{sendMail}/{tarMail}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public boolean sendMessage(Message mes, @PathParam("sendMail") String ufrom, @PathParam("tarMail") String uto) {
+       /* 
+        * - retreive the sender and  the receiver objets
+        * - create a message and send it after populating it with these informations
+        *  */
+		
+		MessageDao mssgManager = new MessageDao(em);
+		UserDao usrManager = new UserDao(em);
+		User sender = usrManager.getUserByEmail(ufrom);
+		User receiver = usrManager.getUserByEmail(uto);
+		//Message message = mssgManager.create(mes);
+		if(sender==null || receiver ==null ){
+			System.out.println("Either the sender or receiver were not found"); return false;
+		}
+		mes.setFromWho(sender);
+	    mes.setToWho(receiver);
+		
+		boolean result = mssgManager.create(mes);
+		return result;
+	}
+
+	
+	
 	@DELETE
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })

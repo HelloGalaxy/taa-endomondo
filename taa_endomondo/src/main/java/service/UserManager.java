@@ -16,7 +16,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import model.database.Plan;
 import model.database.User;
+import datadao.PlanDao;
 import datadao.UserDao;
 
 /*
@@ -62,7 +64,6 @@ public class UserManager {
 
 		UserDao dao = new UserDao(em);
 		Collection<User> s = dao.getAllUsers();
-
 		return s;
 	}
 
@@ -86,6 +87,21 @@ public class UserManager {
 		return res;
 	}
 
+	 // getUserByNickNameEmail(String _nickname,String _mail )
+	@GET
+	@Path("/{nickname}/{mail}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public User authentifUserWithNicknameMail(@PathParam("nickname") String arg0, @PathParam("mail") String arg1) {
+		User usr =null;
+		//usr = new UserDao(em).getUserByNickNameEmail(arg0,arg1);
+		System.out.println("searhc user for :"+arg0+"   -- "+arg1 );
+		usr = new UserDao(em).getUserByNickNameEmail(arg0, arg1);
+		System.out.println("Insde User manager : ");
+		if(usr != null){ System.out.println("return userd nickname"+usr.getNickname());}
+        return usr;
+	}
+	
+	
 	@GET
 	@Path("/search")
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -99,19 +115,37 @@ public class UserManager {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public boolean createCoord(User obj) {
+	public boolean createUser(User obj) {
 
 		UserDao dataManager = new UserDao(em);
-		obj.setId(0);
-		boolean result = dataManager.create(obj);
+		//obj.setId(0);
+		boolean result = dataManager.create(obj);  
 
 		return result;
 	}
 
+	/**  add a friend  to my friend list */
+	@POST
+	@Path("{id}/addFriend/{idfriend}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public boolean addFriend(Object o, @PathParam("id") int id, @PathParam("idfriend") int idfriend) {
+
+		UserDao userManager = new UserDao(em);
+		User me = userManager.getUserById(id);
+		User mynewFriend = userManager.getUserById(idfriend);
+		
+		me.addFriend(mynewFriend);
+		mynewFriend.addFriend(me);
+	
+		return userManager.update(me);  //  update the plan , so does the user vvia update persist
+	
+	}
+	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public boolean updateCoord(User obj) {
+	public boolean updateUser(User obj) {
 
 		UserDao dataManager = new UserDao(em);
 		boolean result = dataManager.update(obj);
@@ -122,7 +156,7 @@ public class UserManager {
 	@DELETE
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public boolean deleteCoord(@PathParam("id") int id) {
+	public boolean deleteUser(@PathParam("id") int id) {
 
 		UserDao dataManager = new UserDao(em);
 		boolean result = dataManager.delete(id);

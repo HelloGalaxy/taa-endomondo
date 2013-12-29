@@ -16,7 +16,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.database.Plan;
+import model.database.User;
 import datadao.PlanDao;
+import datadao.UserDao;
 
 /*
  * getPlanById
@@ -105,15 +107,33 @@ public class PlanManager {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public boolean createPlan(Plan p) {
+	public int createPlan(Plan p) {
 
 		PlanDao dataManager = new PlanDao(em);
 		p.setId(0);
-		boolean result = dataManager.createPlan(p);
+		int result = dataManager.createPlan(p);
 
 		return result;
 	}
 
+	/**  add a user to a given plan */
+	@POST
+	@Path("{id}/addUser/{iduser}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public boolean addUser(Object o, @PathParam("id") int id, @PathParam("iduser") int iduser) {
+
+		PlanDao planManager = new PlanDao(em);
+		Plan p = planManager.getPlanById(id); 
+		// get the plan
+		UserDao userManager = new UserDao(em);
+		User us = userManager.getUserById(iduser); 
+		p.addUser(us);
+		us.addPlan(p);		
+		return planManager.updatePlan(p);  //  update the plan , so does the user vvia update persist
+	}
+	
+	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })

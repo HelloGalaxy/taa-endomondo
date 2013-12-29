@@ -1,6 +1,9 @@
 package model.database;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -31,18 +34,21 @@ public class Plan {
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	private String note;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Route route;
 	@OneToOne
 	private Weather weather;
 	@Enumerated(EnumType.STRING)
 	private SportType sportType;
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, mappedBy = "plans")
-	@JsonIgnore
-	private Set<User> users;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "plans")
+	
+	private Collection<User> users;
 
 	private float avgHeartRate;
 
+	public Plan(){
+		users = new ArrayList<User>();
+	}
 	public int getId() {
 		return id;
 	}
@@ -83,14 +89,6 @@ public class Plan {
 		this.note = note;
 	}
 
-	public Route getWalk() {
-		return route;
-	}
-
-	public void setWalk(Route walk) {
-		this.route = walk;
-	}
-
 	public Weather getWeather() {
 		return weather;
 	}
@@ -123,11 +121,14 @@ public class Plan {
 		this.avgHeartRate = avgHeartRate;
 	}
 
-	public Set<User> getUsers() {
+	public Collection<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Set<User> users) {
+	public void addUser(User us){
+		this.users.add(us);
+	}
+	public void setUsers(Collection<User> users) {
 		this.users = users;
 	}
 

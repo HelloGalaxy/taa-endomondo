@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Random;
@@ -45,10 +46,12 @@ public class PlanTest {
 			plan1.setAvgHeartRate(0);
 			plan1.setEndDate(sdf.parse("01/10/2013 12:48:45"));
 			plan1.setNote("Running in the centre place");
+			
 			Route r = new Route();
 			em.persist(r);
 			r.setCoordListGps(createCoordGPS());
 			plan1.setRoute(r);
+			
 			plan1.setStartDate(sdf.parse("01/10/2013 10:48:45"));
 			plan1.setTitle("Test1...");
 			plan1.setSportType(SportType.Running);
@@ -69,13 +72,14 @@ public class PlanTest {
 //			us1.setFirstname("Marc");
 //			us1.setLastname("dupon");
 			
-			User us1 = new UserDao(em).getUserById(2);
-
-			Set<User> ls = new LinkedHashSet<User>();// new LinkedList<User>();
-
-			ls.add(us1);
-			plan1.setUsers(ls);
-
+			User  u = new User();
+			u.setFirstname("TOTO");
+			Set<User>  lisUser = new HashSet<User>();  
+			lisUser.add(u);
+			plan1.setUsers(lisUser);
+            u.addPlan(plan1);
+			
+			
 			tx.commit();
 		} catch (Exception e) {
 

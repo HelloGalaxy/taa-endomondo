@@ -1,5 +1,6 @@
 package model.database;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -11,14 +12,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 @Entity
 public class Route {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Collection<CoordGPS> coordGpsList;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="route" ,orphanRemoval = true)
+	
+	@JsonManagedReference("route") private Collection<CoordGPS> coordGpsList;
 
 	public Route() {
 		coordGpsList = new LinkedList<CoordGPS>();
@@ -36,8 +41,16 @@ public class Route {
 		return coordGpsList;
 	}
 
+	public void addCoordinate(CoordGPS coord){
+		this.coordGpsList.add(coord);
+		
+	}
 	public void setCoordListGps(Collection<CoordGPS> coordGpsList) {
-		this.coordGpsList = coordGpsList;
+		
+		for(CoordGPS cord:coordGpsList ){
+			this.coordGpsList.add(cord);	
+		}
+		//this.coordGpsList = coordGpsList;
 	}
 
 }

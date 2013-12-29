@@ -6,7 +6,7 @@
 # -----------------------------------------------------
 
 # the value set here will override the value passed by $JAVA_HOME or the -jdkhome switch
-jdkhome=""
+jdkhome="/usr/lib/jvm/java-7-openjdk-i386"
 jargs=""
 thread_flag=""
 

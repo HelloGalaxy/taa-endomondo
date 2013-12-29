@@ -1,5 +1,7 @@
 package model.database;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,13 +40,14 @@ public class User {
 	private String facebook;
 	@Temporal(TemporalType.DATE)
 	private Date joindate;
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	@JsonIgnore
-	private Set<User> friends;
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinTable(
+			   name = "friends")
 	@JsonIgnore
-	private Set<Plan> plans;
-
+	private Collection<User> friends ; //= new ArrayList<User>();
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private Collection<Plan> plans ;//= new ArrayList<Plan>();
+	
 	public int getId() {
 		return id;
 	}
@@ -53,7 +57,8 @@ public class User {
 	}
 
 	public User() {
-
+		friends = new ArrayList<User>();
+		plans = new ArrayList<Plan>();
 	}
 
 	public String getEmail() {
@@ -144,19 +149,27 @@ public class User {
 		this.joindate = joindate;
 	}
 
-	public Set<User> getFriends() {
+	public Collection<User> getFriends() {
 		return friends;
 	}
-
-	public void setFriends(Set<User> friends) {
+	
+    public void addFriend(User friend){
+	   this.friends.add(friend);
+    }
+    
+	public void setFriends(Collection<User> friends) {
 		this.friends = friends;
 	}
 
-	public Set<Plan> getPlans() {
+	public Collection<Plan> getPlans() {
 		return plans;
 	}
-
-	public void setPlans(Set<Plan> plans) {
+	
+    public void addPlan(Plan p){
+    	this.plans.add(p);
+    }
+    
+	public void setPlans(Collection<Plan> plans) {
 		this.plans = plans;
 	}
 
