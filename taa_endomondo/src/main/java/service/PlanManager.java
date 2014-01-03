@@ -134,6 +134,22 @@ public class PlanManager {
 	}
 	
 	
+	@POST
+	@Path("{id}/addUserByNickname/{usernickname}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public boolean addUserByNickName(Object o, @PathParam("id") int id, @PathParam("usernickname") String nickname) {
+
+		PlanDao planManager = new PlanDao(em);
+		Plan p = planManager.getPlanById(id); 
+		// get the plan
+		UserDao userManager = new UserDao(em);
+		User us = userManager.getUserByNickName(nickname); 
+		p.addUser(us);
+		us.addPlan(p);		
+		return planManager.updatePlan(p);  //  update the plan , so does the user vvia update persist
+	}
+	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })

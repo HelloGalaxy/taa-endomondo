@@ -8,6 +8,7 @@ import javax.naming.spi.DirStateFactory.Result;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import model.database.Plan;
 import model.database.User;
 
 public class UserDao extends DataDao {
@@ -31,8 +32,7 @@ public class UserDao extends DataDao {
 			// get the list of all the users
 			Collection<User> results = query.getResultList();			
 			// clear the list of plans and fiends
-			 
-			    clearFriendsPlansFromList((ArrayList<User>) results);   	 
+			//clearFriendsPlansFromList((ArrayList<User>) results);   	 
 			
 			 return results;
 
@@ -58,7 +58,7 @@ public class UserDao extends DataDao {
 					iduser);
 			User usr = (User) query1.getSingleResult();
 		    //  clear plans and friends
-			clearFriendsPlans(usr);
+			//clearFriendsPlans(usr);
 			
 			return usr;
 
@@ -83,8 +83,8 @@ public class UserDao extends DataDao {
 					_mail);
 			User usr = (User) query1.getSingleResult();
 			//  clear plans and friends
-			clearFriendsPlans(usr);
-			
+			//clearFriendsPlans(usr);
+			 System.out.println("Entity user requested found: by email");
 			return usr;
 
 		} catch (javax.persistence.NoResultException e) {
@@ -94,7 +94,64 @@ public class UserDao extends DataDao {
 
 		
 	}
+   
+	public User getUserByNickName(String _nickname){
+		
+		String queryString1 = "SELECT  usr  FROM  User AS usr where usr.nickname=:nikname";
 
+		try {
+			   Query query1 = em.createQuery(queryString1);
+			   query1.setParameter("nikname",_nickname);		
+			   User usr = (User) query1.getSingleResult();
+			   //  clear plans and friends		
+			   //clearFriendsPlans(usr);
+		 	   System.out.println("Entity user requested found: by nickname");
+			   return usr;
+
+		   } catch (javax.persistence.NoResultException e) {
+			   System.out.println("Entity user requested Note found"); 
+			  return null;
+		}
+	}
+	 
+	public Collection<User> getFriends(String _nickname){
+		
+		String queryString1 = "SELECT  usr  FROM  User AS usr where usr.nickname=:nikname";
+
+		try {
+			   Query query1 = em.createQuery(queryString1);
+			   query1.setParameter("nikname",_nickname);		
+			   User usr = null; usr = (User) query1.getSingleResult();
+			  
+		 	   System.out.println("Entity user requested found: by nickname");
+			   return usr.getFriends();
+
+		   } catch (javax.persistence.NoResultException e) {
+			   System.out.println("Entity user requested Note found"); 
+			  return null;
+		}
+		
+	}
+	//getPlans(arg0);
+   public Collection<Plan> getPlans(String _nickname){
+		
+		String queryString1 = "SELECT  usr  FROM  User AS usr where usr.nickname=:nikname";
+
+		try {
+			   Query query1 = em.createQuery(queryString1);
+			   query1.setParameter("nikname",_nickname);		
+			   User usr = null; usr = (User) query1.getSingleResult();
+			  
+		 	   System.out.println("Entity user requested found: by nickname");
+			   return usr.getPlans();
+
+		   } catch (javax.persistence.NoResultException e) {
+			   System.out.println("Entity user requested Note found"); 
+			  return null;
+		}
+		
+	}
+	
 	public User getUserByNickNameEmail(String _nickname,String _mail ) {
 
 		String queryString1 = "SELECT  usr  FROM  User AS usr where usr.nickname=:nikname and usr.email=:mail";
@@ -106,14 +163,14 @@ public class UserDao extends DataDao {
 			
 			   User usr = (User) query1.getSingleResult();
 			   //  clear plans and friends		
-			   clearFriendsPlans(usr);
+			  // clearFriendsPlans(usr);
 		 	   System.out.println("Entity user requested found");
 			   return usr;
 
 		   } catch (javax.persistence.NoResultException e) {
 			   System.out.println("Entity user requested Note found"); 
 			  return null;
-		}
+		   }
 	
 	}
 	
@@ -178,17 +235,17 @@ public class UserDao extends DataDao {
 		return true;
 	}
 	
-	public void clearFriendsPlansFromList(ArrayList<User> usrli){
+	/*public void clearFriendsPlansFromList(ArrayList<User> usrli){
 		   
 		    for(int i=0 ; i< usrli.size(); i++){
 		    	clearFriendsPlans(usrli.get(i));
 		    }
-     }
+     }*/
 	
-	public void clearFriendsPlans(User usr){
+	/*public void clearFriendsPlans(User usr){
 	   if(usr==null)   return;
 	   usr.setFriends(new ArrayList());
 	   usr.setPlans(new ArrayList());
-	}
+	}*/
 
 }

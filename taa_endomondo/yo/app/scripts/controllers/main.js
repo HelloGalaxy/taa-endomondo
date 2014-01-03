@@ -1,5 +1,4 @@
 'use strict';
-
 angular.module('yoApp')
   .controller('MainCtrl', function ($scope) {
     $scope.awesomeThings = [
@@ -9,35 +8,19 @@ angular.module('yoApp')
     ];
   });
 angular.module('yoApp')
-  .controller('UserCtrl', function ($scope, userService, $window, $http,  $location, $rootScope, $cookieStore) {
-      $scope.users = userService.getUsers();
-     
-      $scope.visitorsession=[]; 
-      
-      
-      
-      $scope.loginRRRSaved = function(){
-		  
-		    if($cookieStore.get('loggedin')!='true'){
-		        alert('new cookie created');$cookieStore.put('loggedin', 'true'); $location.path( "/logged" );
-		    }else{
-				  alert('cokkie exist'); $cookieStore.remove('loggedin');
-				 }    
-	  }
-	  
-	    $scope.loginRRR = function(){
-
+.controller('UserCtrl', function($scope, userService, $window, $http,  $location, $cookieStore){
+	 $scope.currentuser = $cookieStore.get('nickname');
+	 $scope.users = userService.getUsers(); 
+	   $scope.login= function(){
+            alert('click on login');
 		    if($cookieStore.get('loggedin')!='true'){
 		    
 		         $http.get("./rest/user/"+$scope.visitor.nickname+"/"+$scope.visitor.mail).success(function(data, status, headers, config) {  //./rest/user/1?callback=JSON_CALLBACK
 				        if(status == 200) { 
 						 $cookieStore.put('loggedin', 'true'); 
 		                 $cookieStore.put('nickname', data.nickname);  
-				         //alert(data.nickname);
-				         alert("Hello , "+$cookieStore.get('nickname'));
+				        // alert("Hello , "+$cookieStore.get('nickname'));
 				         $location.path( "/logged" );
-				         //$window.location='/#/logged';
-				         
 				        } else
 				          alert(" Invalide user nickname or email !");
 			    }).error(function(data, status, headers, config) {
@@ -45,60 +28,19 @@ angular.module('yoApp')
 			    });	
 			    
 		    }else{
-				  //alert('cokkie exist'); 
-				  $cookieStore.remove('loggedin');
-				  $cookieStore.remove('nickname');
-				  $location.path( "/logged" );
+				    $location.path( "/logged" );
 				 } 
 	  }
 	  
 	  // sing out the user
 	  $scope.signOut  = function(){
-		    alert('sign out clicke'); 
+		    alert('sign out click'); 
 		    $cookieStore.remove('loggedin');
 		    $cookieStore.remove('nickname');
 		    $location.path( "/" );
 	   }
-	  
-	 /* $scope.$watch(function() { return $location.path(); }, function(newValue, oldValue){  
-      if ($scope.loggedIn == false && newValue != '/login'){  
-             $location.path('/login');  
-       }  
-      }); */
-	      
-      $scope.login = function(){
-			
-			   $http.get("./rest/user/1").success(function(data, status, headers, config) {  //./rest/user/1?callback=JSON_CALLBACK
-				        if(status == 200) { $scope.visitorsession = $scope.visitor.nickname ; 
-				        // alert(data.lastname);
-				         alert($scope.visitorsession);
-				        ;$window.location='/#/logged';
-				         
-				        } else
-				          alert(" Invalide user nickname or email !");
-			    }).error(function(data, status, headers, config) {
-			            $scope.visitorsession = null; alert(" error !");
-			    });	
-			    //$window.location='/#/logged';		
-				//$scope.visitorsession = userService.getUser($scope.visitor.mail, $scope.visitor.nickname ); 
-				// $scope.visitorsession = userService.getUser('a@yahoo.fr', 'Jeany' ); 
-				// alert("inside mainJs : vis session :"+ $scope.visitorsession);  
-				/* if($scope.visitorsession==null){  
-					   alert("Invalide nick name or mail  ?");
-					}else{
-						   alert(" valide nick name or mail  ?");
-						   $window.location='/#/logged';
-		    	 }*/
-		  
-			     alert("end of login in login(): "+$scope.visitorsession);
-       }
-    
-       $scope.registeruser = function(){
+	     $scope.registeruser = function(){
 		   
-		     /*var newUser = { "height":$scope.newuser.height,"firstname":$scope.newuser.firstname,"lastname":$scope.newuser.lastname,
-				              "nickname":$scope.newuser.nickname,"sex":$scope.newuser.sex,"birthday":$scope.newUser.birthday,
-				              "weight":$scope.newuser.weight,"avatar":null,"facebook":$scope.newuser.facebook,"joindate":"0-0-0",
-				              "friends":null,"plans":null,"email":$scope.newuser.email};*/
 				var newUser = {"height":$scope.newuser.height, "firstname":$scope.newuser.firstname,"lastname":$scope.newuser.lastname,
 				              "nickname":$scope.newuser.nickname,"sex":$scope.newuser.sex,"weight":$scope.newuser.weight,"avatar":null,"facebook":$scope.newuser.facebook,
 				              "friends":null,"plans":null,"email":$scope.newuser.email, "birthday":$scope.newuser.birthday};
@@ -114,16 +56,34 @@ angular.module('yoApp')
 		    //alert("frtom"+$scope.messgfrom.email+", to "+$scope.messgto.email);
 		    userService.senMail(newMessage,$scope.messgfrom.email,$scope.messgto.email);
 		    
-		}	  
- });
+		}
+		
+		$scope.addFriend = function(friendmail){ // friendmail //user.email
+			
+			  alert(" add friend requested from : "+friendmail);
+			  alert($cookieStore.get('nickname')+" , you have a new friend !");
+			  userService.addFriend($cookieStore.get('nickname'), friendmail);
+	    }	
+	    
+	    $scope.friends = userService.getFriends($cookieStore.get('nickname'));
+	    $scope.challenges = userService.getChallenges($cookieStore.get('nickname'));  
+		
+	});
 angular.module('yoApp')
-  .controller('PlanCtrl', function ($scope, planService) {
+  .controller('PlanCtrl', function ($scope, planService, $cookieStore) {
       $scope.plans = planService.getPlans();
       
       // $scope.getroute = function(){
 		    $scope.route = planService.getRoute();
 		//    alert("get route called");
 	    //}
+	    
+	  $scope.joinChallenge = function (planid){  
+		     alert($cookieStore.get('nickname')+" , you will be added to the plan !"+planid);
+		     planService.joinPlan($cookieStore.get('nickname'), planid);
+		     alert(" you are now a memeber of that plan");
+	  }
+	    
       $scope.registerPlan = function(){
 		     var lisCoord=[];
 		    

@@ -20,8 +20,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @Entity
+@JsonIgnoreProperties("users")
 public class Plan {
 
 	@Id

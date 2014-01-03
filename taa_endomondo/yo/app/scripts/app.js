@@ -11,8 +11,20 @@ angular.module('yoApp', ['ngResource','ngCookies'])
         templateUrl: 'views/inscritsPage.html',
         controller: 'UserCtrl'
       })
+       .when('/displaymyfriends', {
+        templateUrl: 'views/myFriendsList.html',
+        controller: 'UserCtrl'
+      })// myChallengesList
+       .when('/displaymychallenges', {
+        templateUrl: 'views/myChallengesList.html',
+        controller: 'UserCtrl'
+      })
       .when('/displayplans', {
         templateUrl: 'views/plansPage.html',
+        controller: 'PlanCtrl'
+      })//plansPageJoin
+       .when('/displayplansJoin', {
+        templateUrl: 'views/plansPageJoin.html',
         controller: 'PlanCtrl'
       })
       .when('/login', {
@@ -29,6 +41,10 @@ angular.module('yoApp', ['ngResource','ngCookies'])
       })
       .when('/sendmssg', {
         templateUrl: 'views/messageForm.html',
+        controller: 'UserCtrl'
+      })
+      .when('/addfriend', {
+        templateUrl: 'views/personListAsFriends.html',
         controller: 'UserCtrl'
       })
       .when('/routemapper', {

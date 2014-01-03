@@ -28,7 +28,7 @@ public class PlanDao extends DataDao {
 			System.out.println(query1);
 			List<Plan> li = query1.getResultList();
 			//clear the users from each plan
-			clearUsers((ArrayList<Plan>) li); 
+			//clearUsers((ArrayList<Plan>) li); 
 			return li;
 
 		} catch (Exception e) {
@@ -39,11 +39,16 @@ public class PlanDao extends DataDao {
 	}
 
 	public Plan getPlanById(int Id) {
-
+      try {
 		Plan pl = em.find(Plan.class, Id);
-		// clear the user
-     	pl.setUsers(new ArrayList());
+		// clear the user list
+     	// pl.setUsers(new ArrayList());
+		System.out.println("Entity plan requested by Id found");
 		return pl;
+      }catch(javax.persistence.NoResultException e){
+    	  System.out.println("Entity plan requested by Id Note found"); 
+		  return null;  
+      }
 
 	}
 

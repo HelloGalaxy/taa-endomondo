@@ -19,8 +19,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @Entity
+@JsonIgnoreProperties("friends")
 public class User {
 
 	@Id
@@ -43,7 +45,7 @@ public class User {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(
 			   name = "friends")
-	@JsonIgnore
+	
 	private Collection<User> friends ; //= new ArrayList<User>();
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Collection<Plan> plans ;//= new ArrayList<Plan>();

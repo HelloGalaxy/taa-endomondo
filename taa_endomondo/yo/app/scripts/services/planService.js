@@ -16,7 +16,11 @@ angular.module('yoApp')
 	        //return $resource("./rest/gps").save({ "longitude":90 , "latitude":90 , "attitude":90 });
 	      $resource("./rest/plan").save(newPlan);
 	      return "OK";  	
-	};
+	}; 
+	this.joinPlan = function(nickname, planid){
+		
+	    return $resource("./rest/plan/"+planid+"/addUserByNickname/"+nickname).save({});   
+	}
      this.registerRoute = function (newRoute){
 	      alert("Post plan Donne"); 
 	        //return $resource("./rest/gps").save({ "longitude":90 , "latitude":90 , "attitude":90 });

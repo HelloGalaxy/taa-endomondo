@@ -87,6 +87,26 @@ public class UserManager {
 		return res;
 	}
 
+	@GET
+	@Path("getMyFriends/{nickname}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Collection<User> retrievingFriends(@PathParam("nickname") String arg0) {
+
+		Collection<User> res = new UserDao(em).getFriends(arg0);
+        System.out.println(" Res Size is "+res.size());
+		return res;
+	}
+	
+	@GET
+	@Path("getMyChallenges/{nickname}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Collection<Plan> retrievingPlans(@PathParam("nickname") String arg0) {
+
+		Collection<Plan> res = new UserDao(em).getPlans(arg0);
+        System.out.println(" Res Size is "+res.size());
+		return res;
+	}
+	
 	 // getUserByNickNameEmail(String _nickname,String _mail )
 	@GET
 	@Path("/{nickname}/{mail}")
@@ -138,6 +158,24 @@ public class UserManager {
 		me.addFriend(mynewFriend);
 		mynewFriend.addFriend(me);
 	
+		return userManager.update(me);  //  update the plan , so does the user vvia update persist
+	
+	}
+	
+	@POST
+	@Path("addFriendByEmail/{mynickname}/{friendemail}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public boolean addFriendByEmail(Object o, @PathParam("mynickname") String mynickname, @PathParam("friendemail") String friendemail) {
+
+		UserDao userManager = new UserDao(em);
+		User me = userManager.getUserByNickName(mynickname);
+		User mynewFriend = userManager.getUserByEmail(friendemail);
+		
+		me.addFriend(mynewFriend);
+		mynewFriend.addFriend(me);
+	
+	    System.out.println("adding friend by mail fini ! ");
 		return userManager.update(me);  //  update the plan , so does the user vvia update persist
 	
 	}

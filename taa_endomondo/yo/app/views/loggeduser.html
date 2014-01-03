@@ -43,27 +43,31 @@
 
        </div>
      
-       <!--   effectif content   -->
-      <!--  <div ng-controller="UserCtrl">
-            Hello Mister  {{visitorsession }},</br>
-            <div>
-	   -->
-	    <div ng-repeat="vis in visitorsession">
-	        Heloo {{vis}} </br>
-	    </div>		   
-	    <button class="default" ng-click="signOut()" >signout</button>
-	   
+       <!--   effectif contentenu   -->
+        
+	    <table width="100%">
+             <tr>  
+               <td> <button class="btn btn-danger" ng-click="signOut()" >logout</button> </td>
+                <td color="red"> <h3> Welcome {{currentuser}} </h3> </td>
+                
+             </tr>
+
+            </table> 		   
 	   	   
            </br>
         
                <div class="container">
                   <div  class="jumbotron">
-					  <h2><a href="#/displayplans"> Challenges</a> </h2> <i class="icon-flag"></i> </br>
-			          <h2><a href="#/displayusers">Registered users</a></h2> <i class="icon-user"></i></br> 
-			          <h2><a href="#/newworkout"> New work out </a> </h2> <i class="icon-flag"></i> </br>  
-			          <h2><a href="#"> Add a friend  </a> </h2> <i class="icon-user"></i> </br> 
-			          <h2> <a href="#/sendmssg">Send message </a> </h2> <i class="icon-envelope"></i>
-			          <h2> <a ng-click="messgSend()">Send message Test</a> </h2> <i class="icon-envelope"></i>
+                               
+                                 <h2><a href="#/displaymychallenges"><font face="verdana"> My Challenges </font></a> </h2> <i class="icon-flag"></i> </br>
+                                 <h2><a href="#/displaymyfriends"><font face="verdana"> My Friends    </font></a> </h2> <i class="icon-flag"></i> </br>
+				 <HR  color="red">
+                                  <h2><a href="#/displayplansJoin"> <font face="verdana"> Challenges     </font></a> </h2> <i class="icon-flag"></i> </br>
+			          <h2><a href="#/displayusers"> <font face="verdana"> Registered users </font></a></h2> <i class="icon-user"></i></br> 
+			          <h2><a href="#/newworkout">   <font face="verdana"> New work out     </font> </a> </h2> <i class="icon-flag"></i> </br>  
+			          <h2><a href="#/addfriend">    <font face="verdana"> Add a friend     </font> </a> </h2> <i class="icon-user"></i> </br> 
+			          <h2> <a href="#/sendmssg">    <font face="verdana"> Send message      </font> </a> </h2> <i class="icon-envelope"></i>
+			          <!--<h2> <a ng-click="messgSend()">Send message Test</a> </h2> <i class="icon-envelope"></i>-->
 			          <h2> more ... </h2> </br>
 			      </div>
 			   </div>
