@@ -135,13 +135,25 @@ public class UserManager {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public boolean createUser(User obj) {
+	public User createUser(User obj) {
 
 		UserDao dataManager = new UserDao(em);
 		//obj.setId(0);
-		boolean result = dataManager.create(obj);  
+		System.out.println(" registering user how nickname :"+ obj.getNickname()+"  and email is :"+obj.getEmail());
+		
+		User uschek1=null ;  User uschek2=null;
+		uschek1 = dataManager.getUserByEmail(obj.getEmail());
+		if(uschek1 != null) { 
+			System.out.println(" email already exist "); return null;
+		}
+		uschek2 = dataManager.getUserByNickName( obj.getNickname());
+		if(uschek2 != null) { 
+			System.out.println(" nickname already exist "); return null;
+		}
+		
+		dataManager.create(obj);  
 
-		return result;
+		return obj;
 	}
 
 	/**  add a friend  to my friend list */

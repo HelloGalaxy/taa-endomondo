@@ -14,7 +14,7 @@ angular.module('yoApp', ['ngResource','ngCookies'])
        .when('/displaymyfriends', {
         templateUrl: 'views/myFriendsList.html',
         controller: 'UserCtrl'
-      })// myChallengesList
+      })
        .when('/displaymychallenges', {
         templateUrl: 'views/myChallengesList.html',
         controller: 'UserCtrl'
@@ -22,7 +22,7 @@ angular.module('yoApp', ['ngResource','ngCookies'])
       .when('/displayplans', {
         templateUrl: 'views/plansPage.html',
         controller: 'PlanCtrl'
-      })//plansPageJoin
+      })
        .when('/displayplansJoin', {
         templateUrl: 'views/plansPageJoin.html',
         controller: 'PlanCtrl'

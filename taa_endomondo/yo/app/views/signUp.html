@@ -42,14 +42,14 @@
 
        </div>
      <h2>    Registration  form : </h2>   </br>
-   
+              <h3><font color="red""> Email and Nickname are required and should be unique in the system </font></h3>
      <form novalidate class="well" id="formsignup" >
        
-        First Name:  <input type="text" class="span2" data-ng-model="newuser.firstname">  </br>
-        Last Name:   <input type="text" class="span2" data-ng-model="newuser.lastname">  </br>
-        Nick Name:   <input type="text" class="span2" data-ng-model="newuser.nickname"> </br>
-        Email addr   :   <input type="text" class="span2" data-ng-model="newuser.email"> </br>
-        FaceBook :   <input type="text" class="span2" data-ng-model="newuser.facebook"> </br>
+        First Name *:  <input type="text" class="span2" data-ng-model="newuser.firstname">  </br>
+        Last Name *:   <input type="text" class="span2" data-ng-model="newuser.lastname">  </br>
+        <font color="red"">Nick Name *:  </font> <input type="text" class="span2" data-ng-model="newuser.nickname"> </br>
+        <font color="red"">Email addr  * : </font>   <input type="text" class="span2" data-ng-model="newuser.email"> </br>
+        FaceBook *:   <input type="text" class="span2" data-ng-model="newuser.facebook"> </br>
         Gender   : </br> <input type="radio"  data-ng-model="newuser.sex" value="Male" / > Male 
                          <input type="radio"  data-ng-model="newuser.sex" value="Female" / > Female  </br>
         Weight   :   <input type="text" class="span2" data-ng-model="newuser.weight">(Kg) ex : 60.89  </br>

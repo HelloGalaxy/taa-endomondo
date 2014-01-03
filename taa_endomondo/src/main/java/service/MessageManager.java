@@ -111,25 +111,27 @@ public class MessageManager {
 	@Path("send/{sendMail}/{tarMail}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public boolean sendMessage(Message mes, @PathParam("sendMail") String ufrom, @PathParam("tarMail") String uto) {
+	public Message sendMessage(Message mes, @PathParam("sendMail") String ufrom, @PathParam("tarMail") String uto) {
        /* 
         * - retreive the sender and  the receiver objets
         * - create a message and send it after populating it with these informations
         *  */
 		
+		System.out.println(" *****   inside message manager");
 		MessageDao mssgManager = new MessageDao(em);
 		UserDao usrManager = new UserDao(em);
 		User sender = usrManager.getUserByEmail(ufrom);
 		User receiver = usrManager.getUserByEmail(uto);
 		//Message message = mssgManager.create(mes);
 		if(sender==null || receiver ==null ){
-			System.out.println("Either the sender or receiver were not found"); return false;
+			System.out.println("Either the sender or receiver were not found"); return null;
 		}
 		mes.setFromWho(sender);
 	    mes.setToWho(receiver);
 		
-		boolean result = mssgManager.create(mes);
-		return result;
+		mssgManager.create(mes);
+	    System.out.println(" message content is :"+mes.getContent());
+		return mes;
 	}
 
 	

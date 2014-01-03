@@ -1,5 +1,5 @@
 ﻿angular.module('yoApp')
-.service('userService', function ($resource, $http) {
+.service('userService', function ($resource, $http, $location, $cookieStore) {
    
      this.getUsers = function () 
     {  
@@ -19,14 +19,14 @@
 		  return $resource("./rest/user/getMyChallenges/"+usernickname).query();
 	}
     this.getUser = function ( mail, nickname){
-      /*  $http.get('./rest/user/1')
-		 .then(
+        /*    $http.get('./rest/user/1')
+		     .then(
 			  //success
 			  function( data , status){ alert(angular.fromJson(data));},
 			  //error
 			  function( error ){alert("TT");}
 		   )*/
-		  /*    $http.get("./rest/user/2?callback=JSON_CALLBACK").success(function(data, status, headers, config) {
+	   /*    $http.get("./rest/user/2?callback=JSON_CALLBACK").success(function(data, status, headers, config) {
 				if(status == 200) { visitorsession = nickname }; alert(" succes : "+visitorsession); 
 			    }).error(function(data, status, headers, config) {
 			            visitorsession = null;  alert(" fail : "+ visitorsession); 
@@ -37,37 +37,40 @@
 	
 	this.registerNewUser = function (newUser){
 	  
-	      return $resource("./rest/user").save(newUser);      	
+	      //return $resource("./rest/user").save(newUser); 
+	      return $resource("./rest/user").save(newUser, function (response){
+			   if(response.id >= 0) {
+				    alert("user registered successfully !");
+				    $cookieStore.put('loggedin', 'true'); 
+		            $cookieStore.put('nickname', response.nickname);
+				    $location.path( "/logged" );
+				   }else alert(" Please verify the email and nickname, they should be unique in the system ! ");
+			});     	
 	};
 	
-	this.senMail = function (newMessage, fromEmail, toEmail){
-		/* 
-		 * This first method of sending caused me a problem at the begenning of 
-		 * cean ..;
-		 * */
-	/*	$http({
-			url: './rest/msg/send/'+fromEmail+'/'+toEmail',
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			data: {"content": newMessage}
-		}).success(function (data, status, headers, config) {
-            alert( "Message sent successfuly: if data = true the it was really sent"); // assign  $scope.persons here as promise is resolved here 
-			}).error(function (data, status, headers, config) {
-				alert("error!");
-			});*/
-     	
-     	//  - second method of sending 
-		// $resource("./rest/msg/send/"+fromEmail+"/"+toEmail).save(newMessage);
-	    // th idea is to create a  message and send it 
-	     /*$http("./rest/msg/send/"+fromEmail+"/"+toEmail).post(newMessage).success(function(data, status, headers, config) {
-				        if(status == 200) {  alert("OK");
+	this.senMail = function (newMessage, fromEmail, toEmail, $http){
+		
+		$resource('./rest/msg/send/'+fromEmail+'/'+toEmail).save(newMessage, function (response){
+			   if(response.id >= 0) {
+				     alert("message sent successfuly !");
+				      $location.path( "/logged" );
+				   }else alert("message not sent , please verify the emails ! ");
+			});
+		
+	   /*$http({
+			url: './rest/msg/send/'+fromEmail+'/'+toEmail,
+			method: "POST",
+			data: {"content": newMessage},
+			headers: { 'Content-Type': 'application/json' }
+		    }).success(function (data, status, headers, config) {
+             //  if(status == 200) {  alert("Message sent succesfully");
 				         
-				        } else
-				          alert(" not 200");
-			    }).error(function(data, status, headers, config) {
-			             alert(" error !");
-			    });	
-        */
+				//        } else
+				  //        alert(" error ");
+			}).error(function (data, status, headers, config) {
+				//alert("error!");
+			});
+         */
 	};
 	
 });

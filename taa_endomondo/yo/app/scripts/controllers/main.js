@@ -44,18 +44,15 @@ angular.module('yoApp')
 				var newUser = {"height":$scope.newuser.height, "firstname":$scope.newuser.firstname,"lastname":$scope.newuser.lastname,
 				              "nickname":$scope.newuser.nickname,"sex":$scope.newuser.sex,"weight":$scope.newuser.weight,"avatar":null,"facebook":$scope.newuser.facebook,
 				              "friends":null,"plans":null,"email":$scope.newuser.email, "birthday":$scope.newuser.birthday};
-				alert("reggting user ok ! ");         
+				alert("registering user ok ! ");         
 			    userService.registerNewUser(newUser);	 
-		   } 
+		} 
 		   
 		     
 	    $scope.messgSend= function(){
 		    var newMessage = { "content":$scope.messgText.content};
-		    alert($cookieStore.get('nickname')+" , will send a message");
 		    // send mail ===>  as parameters give the cookies stroe nickname + data from the form, in form no need for the id .... just mail/ nicknames
-		    //alert("frtom"+$scope.messgfrom.email+", to "+$scope.messgto.email);
 		    userService.senMail(newMessage,$scope.messgfrom.email,$scope.messgto.email);
-		    
 		}
 		
 		$scope.addFriend = function(friendmail){ // friendmail //user.email
@@ -85,14 +82,19 @@ angular.module('yoApp')
 	  }
 	    
       $scope.registerPlan = function(){
-		     var lisCoord=[];
 		    
-		     
-		     var coordRef = {"longitude":50.0,"latitude":52.0,"attitude":53.0};
+		    var lisCoord=[];
+		        
+		    /* var coordRef = {"longitude":50.0,"latitude":52.0,"attitude":53.0};
 		     var coordRef2 = { "longitude":60.0,"latitude":60.0,"attitude":60.0};
 		     lisCoord.push(coordRef); lisCoord.push(coordRef2);
-		     var routeRef = {"coordGpsList":lisCoord};
-		     planService.registerRoute(routeRef);
+		     var routeRef = {"coordGpsList":lisCoord};*/
+		     
+		    
+		     var newplan = {"title":$scope.newWOut.title, "note":$scope.newWOut.note,"startDate":$scope.newWOut.startdate,
+		                "endDate":$scope.newWOut.enddate,"sportType":$scope.newWOut.sportype};
+		    
+		     planService.registerPlan(newplan);
 		     
 		
 		     //planService.registerCoord(coordRef);  planService.registerCoord(coordRef2);
@@ -104,7 +106,7 @@ angular.module('yoApp')
 		                "endDate":$scope.newWOut.enddate, "weather":null,"sportType":null,"route":routeRef};
 		     var retst= planService.registerPlan(nplan); 
 		     */
-		     alert(retst);          
+		    // alert(retst);          
 		     //alert("title : "+$scope.newWOut.title+" Note :"+$scope.newWOut.note+);
 		  }
   });

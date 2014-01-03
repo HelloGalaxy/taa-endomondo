@@ -60,17 +60,19 @@
         <label class="form_col">Note     :</label><input type="text"  data-ng-model="newWOut.note">  </br>
         <label class="form_col">Star DATE     :</label> <input type="text"  data-ng-model="newWOut.startdate">   ex : 2013-6-5 </br>
        <label class="form_col">End date    :</label> <input type="text"  data-ng-model="newWOut.enddate"> </br>
-       <label class="form_col">Weather     :</label> <input list="weather"  type="text"  data-ng-model="newWOut.weather" id="choix_weather">
-				   <datalist id="weather">
-					    <option value="SUNNY">
-					    <option value="CLOUDY">
-					    <option value="RAINY">
+     
+      <label class="form_col">Sport      :</label> <input list="sport"  type="text"  data-ng-model="newWOut.sportype" id="choix_sport">
+				       <datalist id="sport">
+					    <option value="Running">
+					    <option value="Riding">
+					    <option value="Cycling">
+                                            <option value="Tenis">
+					    <option value="Swimming">
+					    <option value="Hiking">
+                                            <option value="Football">
 					</datalist>
-		</br>			
-		Route : (please enter coordinates {long, lati, att},{...})  </br>			
-         <textarea rows="4" cols="50" maxlength="100" data-ng-model="newWOutroute.content">
-                 Enter the coordinates here...
-        </textarea> 
+			</br></br>
+		 - add your walk later 
         </br>
         <button value="reset" onclick="formReset()" >RESET</button>
         <button class="btn btn-success"  data-ng-click="registerPlan()" >SAVE</button>

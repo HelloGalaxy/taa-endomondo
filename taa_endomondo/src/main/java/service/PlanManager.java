@@ -60,60 +60,34 @@ public class PlanManager {
 		return pl;
 	}
 
-	// @GET
-	// @Path("/PlansByDate/{startDate}")
-	// @Produces({ MediaType.APPLICATION_JSON })
-	// public Collection<Plan> listPlansByDate(@PathParam("startDate") Date
-	// args0) {
-	//
-	// Collection<Plan> p = new PlanDao(em).getPlansByDate(args0);
-	//
-	// return p;
-	// }
-	//
-	// @GET
-	// @Path("/RouteById/{Id}")
-	// @Produces({ MediaType.APPLICATION_JSON })
-	// public Route getRouteById(@PathParam("Id") int args0) {
-	//
-	// Route r = new PlanDao(em).getRouteById(args0);
-	//
-	// return r;
-	// }
-	//
-	// @GET
-	// @Path("/PlansBySportType/{sportType}")
-	// @Produces({ MediaType.APPLICATION_JSON })
-	// public Collection<Plan> getPlansBySportType(
-	// @PathParam("sportType") String args0) {
-	//
-	// Collection<Plan> pls = new PlanDao(em).getPlansBySportType(args0);
-	//
-	// return pls;
-	// }
-	//
-	// @GET
-	// @Path("/getAllUsersById/{id}")
-	// @Produces({ MediaType.APPLICATION_JSON })
-	// public Collection<model.database.User> getAllUsersById(
-	// @PathParam("id") int args0) {
-	//
-	// Collection<model.database.User> users = new PlanDao(em)
-	// .getAllUsersById(args0);
-	//
-	// return users;
-	// }
 
 	@POST
+	@Path("{usernickname}/createplan")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public int createPlan(Plan p) {
+	public Plan createPlan(Plan p, @PathParam("usernickname") String user_nickname) {
 
 		PlanDao dataManager = new PlanDao(em);
 		p.setId(0);
-		int result = dataManager.createPlan(p);
+		
+		System.out.println(" Creating plan : title"+ p.getTitle() + " note"+p.getNote()+"...");
+		dataManager.createPlan(p);
 
-		return result;
+		// getting the user how wants to create the plan
+		UserDao usrdao = new UserDao(em);
+		User us = usrdao.getUserByNickName(user_nickname);
+		if(us==null){  System.out.println("user not found !");  return null ; }
+		else{
+			System.out.println("user  found !, nickname was "+user_nickname);
+		}
+		
+		//  faire l'association
+		us.addPlan(p);
+		p.addUser(us);
+		dataManager.updatePlan(p);
+		usrdao.update(us);
+		
+		return p;
 	}
 
 	/**  add a user to a given plan */
