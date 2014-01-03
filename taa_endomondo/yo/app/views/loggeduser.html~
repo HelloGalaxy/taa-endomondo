@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+       <title> Logged User Page </title>
+       <meta name="viewport"  content="width=device-width, initial-scale=1.0">
+       <link href="views/css/bootstrap.min.css"  rel="stylesheet">
+       <link href="views/css/style.css"  rel="stylesheet">
+       <link rel="stylesheet" href="styles/main.css">
+       <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    </head>
+  
+   <body> 
+    
+        <!--  Top navigation bar    -->
+       <div class="navbar navbar-inverse  navbar-static-top" >
+        
+          <div class="container">
+                 <a href  ="#" class="navbar-brand">Endomondo like </a>
+
+                 <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+                      <span class="icon-bar"> </span>
+                      <span class="icon-bar"> </span>
+                      <span class="icon-bar"> </span>
+                 </button> 
+                  
+                 <div class="collapse navbar-collapse navHeaderCollapse">  
+                   
+                     <ul class="nav navbar-nav navbar-right">
+                         <li > <a href="#">Home </a></li>
+                         <li  class="dropdown"> <!--<a href="#">Social Media  </a> -->
+                               <a href="#" class="dropdown"  data-toggle="dropdown">Social Media <b class="caret"></b></a>
+                                <ul  class="dropdown-menu">
+                                   <li><a href="#">Twitter   </a></li>
+                                   <li><a href="#"> FaceBook  </a></li>
+                                   <li><a href="#"> Google+ </a> </li>
+                                   <li><a href="#"> Yahoo</a>  </li>
+                                </ul>
+                         </li>
+                         <li> <a href="#">Contact </a></li>
+                     </ul>
+                 </div>
+          </div>
+
+       </div>
+     
+       <!--   effectif contentenu   -->
+        
+	    <table width="100%">
+             <tr>  
+               <td> <button class="btn btn-danger" ng-click="signOut()" >logout</button> </td>
+               <!-- <td color="red"> Welcome {{currentuser}} </td>-->
+               <td> <a href="#/logged"> Home</a> </td> 
+             </tr>
+
+            </table> 		   
+	   	   
+           </br>
+        
+               <div class="container">
+                  <div  class="jumbotron">
+                               
+                                 <h2><a href="#/displaymychallenges"><font face="verdana"> My Challenges </font></a> </h2> <i class="icon-flag"></i> </br>
+                                 <h2><a href="#/displaymyfriends"><font face="verdana"> My Friends    </font></a> </h2> <i class="icon-flag"></i> </br>
+				 <HR  color="red">
+                                  <h2><a href="#/displayplansJoin"> <font face="verdana"> Challenges     </font></a> </h2> <i class="icon-flag"></i> </br>
+			          <h2><a href="#/displayusers"> <font face="verdana"> Registered users </font></a></h2> <i class="icon-user"></i></br> 
+			          <h2><a href="#/newworkout">   <font face="verdana"> New work out     </font> </a> </h2> <i class="icon-flag"></i> </br>  
+			          <h2><a href="#/addfriend">    <font face="verdana"> Add a friend     </font> </a> </h2> <i class="icon-user"></i> </br> 
+			          <h2> <a href="#/sendmssg">    <font face="verdana"> Send message      </font> </a> </h2> <i class="icon-envelope"></i>
+			          <!--<h2> <a ng-click="messgSend()">Send message Test</a> </h2> <i class="icon-envelope"></i>-->
+			          <h2> more ... </h2> </br>
+			      </div>
+			   </div>
+           
+              
+           
+       <!-- End of effectif content  -->
+       
+       <!-- footer -->
+       <div  class="navbar navbar-default navbar-fixed-bottom">  
+            <div  class="container">
+              <p  class="navbar-text">  Site built for endemondo sport tracking</p>
+              <a href="http://youtube.com"  class="navbar-btn  btn-danger btn  pull-right"> Subscribe on Youtub</a>
+              
+             </div>
+       </div>
+       
+    <!--   Put the scripts at the end so that the page load faster  -->
+	     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	     <script src="views/js/bootstrap.js"></script>
+    <!--   .....   -->
+     
+     
+
+   </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+       <title> Challenges </title>
+       <meta name="viewport"  content="width=device-width, initial-scale=1.0">
+       <link href="views/css/bootstrap.min.css"  rel="stylesheet">
+       <link href="views/css/style.css"  rel="stylesheet">
+       <link rel="stylesheet" href="styles/main.css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    </head>
+  
+   <body> 
+   
+<h1 color"Green"> He is the list of registered challenges in our site </h1>
+
+<table class="table table-bordered table-striped table-hover">
+	 <thead>
+        <td color="green">Challenge Ref</td>
+        <td>Title</td>
+        <td>Note</td>
+        <td>Sport</td>
+        <td>Date Start</td>
+        <td>Date End</td>
+        <td> <i class="icon-plus"></i> </td>
+    </thead>
+    <tbody>
+		<tr ng-repeat="plan in plans"> 
+
+		
+				  <td> {{plan.id}} </td>
+				  <td>   {{plan.title}}</td>
+				  <td>	 {{plan.note}} </td>
+				  <td>	 {{plan.sportType}}</td>
+				  <td>	 {{plan.startDate}}</td>
+				  <td>	 {{plan.endDate}}  </td>
+		         <!-- <td><i class="icon-edit"></i></td>-->
+                             
+		        
+		</tr>
+   </tbody>
+</table>
+
+
+ <!-- footer -->
+       <div  class="navbar navbar-default navbar-fixed-bottom">  
+            <div  class="container">
+              <p  class="navbar-text">  Site built for endemondo sport tracking</p>
+              <a href="http://youtube.com"  class="navbar-btn  btn-danger btn  pull-right"> Subscribe on Youtub</a>
+              
+             </div>
+       </div>
+       
+    <!--   Put the scripts at the end so that the page load faster  -->
+	     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	     <script src="views/js/bootstrap.js"></script>
+    <!--   .....   -->
+     
+     
+
+   </body>
+</html>

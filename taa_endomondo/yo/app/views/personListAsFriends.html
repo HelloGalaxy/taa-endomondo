@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+    <head> 
+       <title> Boostrape </title>
+       <meta name="viewport"  content="width=device-width, initial-scale=1.0">
+       <link href="views/css/bootstrap.min.css"  rel="stylesheet">
+       <link href="views/css/style.css"  rel="stylesheet">
+       <link rel="stylesheet" href="views/css/styleAnim.css">
+       <link rel="stylesheet" href="styles/main.css">
+       <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+      
+    </head>
+  
+   <body> 
+    
+<a href="#/logged">home</a></li>
+<h1> Here is the list of registered users in our site </h1> </br>
+
+Search by firstName:</br>
+<div class="input-append">
+
+<input ng-model="filterUserName" class="search-query" style="width: 200px"><br>
+</div>
+</br>
+ 
+
+<div ng-animate="'animate'" ng-repeat="user in users | filter:{firstname:filterUserName} " > 
+  
+  <div  class="jumbotron">
+            First Name  : {{user.firstname}} </br>
+            Last Name  : {{user.lastname}}  </br>
+            Sex :         {{user.sex}}       </br>
+            Facebook :    {{user.facebook}}  </br>
+            Email :    {{user.email}}  </br>
+           <button class="btn btn-warning" ng-click="addFriend(user.email)">add</button>
+            <a href ="#/project/{{project.id}}"><i class="icon-user"></i></a>
+   </div>   
+   </br>      
+</div>
+
+
+
+</body>
+
+</html>
