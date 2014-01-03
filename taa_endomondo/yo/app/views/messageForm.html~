@@ -1,0 +1,41 @@
+  <html>
+    <head> 
+       <title>  New Message : </title>
+       <meta name="viewport"  content="width=device-width, initial-scale=1.0">
+       <link href="views/css/bootstrap.min.css"  rel="stylesheet">
+       <link href="views/css/style.css"  rel="stylesheet">
+       <link rel="stylesheet" href="styles/main.css">
+    </head>
+  
+   <body> 
+  
+    <form  class="well">
+   
+		<h1> Please fill in the required fields </h1>  
+		</br>
+		Sender (email) </br>
+		<input type="text" class="span2" data-ng-model="messgfrom.email">
+		</br> To (email)  </br>
+		<input type="text" class="span2" data-ng-model="messgto.email">
+		</br>
+		
+		<textarea rows="4" cols="50" maxlength="100" data-ng-model="messgText.content">
+                 Enter text here...
+        </textarea> 
+        </br>
+		<button type="submit"  class="btn btn-success" data-ng-click="messgSend()">send</button>
+		
+   </form>
+  
+     <a href="#" > Home </a>
+   
+    <!--   Put the scripts at the end so that the page load faster  -->
+	     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	     <script src="views/js/bootstrap.js"></script>
+    <!--   .....   -->
+		
+		 
+
+</body>
+
+</html>
